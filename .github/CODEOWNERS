@@ -1,0 +1,9 @@
+# CODEOWNERS file - require reviews from repository owner for all changes
+# Format: <pattern> <owner1> <owner2> ...
+
+# Require the repo owner for all paths by default
+* @AccessWatch
+
+# If you add teams, use @org/team format (example):
+# src/ @AccessWatch/frontend-team
+# tabs/ @AccessWatch/ui-team
