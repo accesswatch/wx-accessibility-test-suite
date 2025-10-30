@@ -1,0 +1,8 @@
+wxPython==4.2.0
+pytest>=7.0,<8
+flake8>=6.0,<7
+pyflakes>=3.0,<4
+# Optional developer tools (uncomment as needed)
+# black>=24.0,<25
+# isort>=6.0,<7
+# mypy>=1.8,<2
