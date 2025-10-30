@@ -13,6 +13,13 @@ import wx
 import sys
 import json
 from pathlib import Path
+import logging
+
+# Configure basic logging so modules using logging emit to console by default
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s %(levelname)s:%(name)s: %(message)s'
+)
 
 # Import tab modules (will be created)
 from tabs.basic_controls_tab import BasicControlsTab
