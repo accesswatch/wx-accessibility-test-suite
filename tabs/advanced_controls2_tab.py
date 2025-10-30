@@ -1,6 +1,5 @@
-"""
-Advanced Controls Tab 2
-========================
+"""Advanced Controls Tab 2.
+
 Tests for spin control double, AUI notebook, and other specialized controls.
 """
 
@@ -13,6 +12,7 @@ class AdvancedControls2Tab(wx.Panel, TabStateHelper):
     """Tab containing SpinCtrlDouble, AuiNotebook, and specialized controls."""
     
     def __init__(self, parent, main_frame):
+        """Initialize advanced controls 2 tab and build UI."""
         super().__init__(parent)
         self.main_frame = main_frame
         self.tab_name = "Advanced Controls 2"
@@ -33,6 +33,7 @@ class AdvancedControls2Tab(wx.Panel, TabStateHelper):
         self.SetSizer(panel_sizer)
         
     def GetName(self):
+        """Return human-readable tab name."""
         return self.tab_name
         
     def _create_spinctrldouble_group(self, parent):

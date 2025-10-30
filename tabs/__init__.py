@@ -1,6 +1,4 @@
-"""
-Tab modules for the Accessibility Test Suite.
-"""
+"""Tab modules for the Accessibility Test Suite."""
 
 from tabs.basic_controls_tab import BasicControlsTab
 from tabs.listctrl_tab import ListCtrlTab

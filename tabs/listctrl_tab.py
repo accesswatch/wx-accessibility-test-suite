@@ -1,6 +1,5 @@
-"""
-ListCtrl Tab
-============
+"""ListCtrl Tab.
+
 Tests for wx.ListCtrl with embedded checkboxes in report view.
 Demonstrates multi-column lists with checkbox selection and keyboard navigation.
 """
@@ -14,6 +13,7 @@ class ListCtrlTab(wx.Panel, TabStateHelper):
     """Tab containing ListCtrl with checkboxes for accessibility testing."""
     
     def __init__(self, parent, main_frame):
+        """Initialize ListCtrl tab and populate list controls."""
         super().__init__(parent)
         self.main_frame = main_frame
         self.tab_name = "ListCtrl with Checkboxes"
@@ -86,6 +86,7 @@ class ListCtrlTab(wx.Panel, TabStateHelper):
         self.SetSizer(main_sizer)
         
     def GetName(self):
+        """Return human-readable tab name."""
         return self.tab_name
         
     def _populate_list(self):

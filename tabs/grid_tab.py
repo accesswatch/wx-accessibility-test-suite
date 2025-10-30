@@ -1,6 +1,5 @@
-"""
-Grid Tab
-========
+"""Grid Tab.
+
 Tests for wx.grid.Grid with embedded checkbox cells.
 Demonstrates spreadsheet-like navigation with mixed cell types.
 """
@@ -15,6 +14,7 @@ class GridTab(wx.Panel, TabStateHelper):
     """Tab containing Grid with checkbox cells for accessibility testing."""
     
     def __init__(self, parent, main_frame):
+        """Initialize grid tab and build grid UI controls."""
         super().__init__(parent)
         self.main_frame = main_frame
         self.tab_name = "Grid with Checkbox Cells"
@@ -67,6 +67,7 @@ class GridTab(wx.Panel, TabStateHelper):
         self.SetSizer(main_sizer)
         
     def GetName(self):
+        """Return human-readable tab name."""
         return self.tab_name
         
     def _setup_columns(self):
@@ -234,12 +235,12 @@ class GridTab(wx.Panel, TabStateHelper):
                 - The checkbox column edits may provide string values like "1" or empty string.
                 - Avoid raising exceptions during validation; gracefully veto and report.
                 """
-        row = event.GetRow()
-        col = event.GetCol()
-        new_value = event.GetString()
-        
-        # Could add validation here
-        event.Skip()
+                row = event.GetRow()
+                col = event.GetCol()
+                new_value = event.GetString()
+
+                # Could add validation here
+                event.Skip()
         
     def on_cell_changed(self, event):
                 """Handle a cell value that has changed.
@@ -260,25 +261,25 @@ class GridTab(wx.Panel, TabStateHelper):
                 - When non-editable cells are changed programmatically, call
                     `main_frame.update_status_bar` to announce the change.
                 """
-        row = event.GetRow()
-        col = event.GetCol()
-        
-        # Update grid data
-        if col == 3:  # Checkbox column
-            self.grid_data[row + 1][col] = (self.grid.GetCellValue(row, col) == "1")
-        else:
-            self.grid_data[row + 1][col] = self.grid.GetCellValue(row, col)
-            
-        self._update_info_label()
-        
-        col_name = self.grid.GetColLabelValue(col)
-        self.main_frame.update_status_bar(
-            f"Cell updated: {col_name}",
-            f"Row {row + 1}, Column {col + 1}",
-            ""
-        )
-        
-        event.Skip()
+                row = event.GetRow()
+                col = event.GetCol()
+
+                # Update grid data
+                if col == 3:  # Checkbox column
+                        self.grid_data[row + 1][col] = (self.grid.GetCellValue(row, col) == "1")
+                else:
+                        self.grid_data[row + 1][col] = self.grid.GetCellValue(row, col)
+
+                self._update_info_label()
+
+                col_name = self.grid.GetColLabelValue(col)
+                self.main_frame.update_status_bar(
+                        f"Cell updated: {col_name}",
+                        f"Row {row + 1}, Column {col + 1}",
+                        ""
+                )
+
+                event.Skip()
         
     def on_control_focus(self, event):
                 """Handle focus events routed to the grid control.
@@ -297,48 +298,48 @@ class GridTab(wx.Panel, TabStateHelper):
                 Edge cases:
                 - If the grid has no rows or columns, avoid out-of-range cursor calls.
                 """
-        row = self.grid.GetGridCursorRow()
-        col = self.grid.GetGridCursorCol()
-        
-        if row >= 0 and col >= 0:
-            col_name = self.grid.GetColLabelValue(col)
-            value = self.grid.GetCellValue(row, col)
-            
-            if col == 3:  # Checkbox column
-                state = "Checked" if value == "1" else "Unchecked"
-                value_display = state
-            else:
-                value_display = value if value else "(empty)"
-                
-            self.main_frame.update_status_bar(
-                f"Grid: {self.grid.GetNumberRows()}×{self.grid.GetNumberCols()}",
-                f"Role: Grid cell, Row {row + 1}, Col {col + 1} ({col_name}): {value_display}",
-                "Arrow keys to navigate, F2 to edit, Space for checkboxes"
-            )
-        event.Skip()
+                row = self.grid.GetGridCursorRow()
+                col = self.grid.GetGridCursorCol()
+
+                if row >= 0 and col >= 0:
+                        col_name = self.grid.GetColLabelValue(col)
+                        value = self.grid.GetCellValue(row, col)
+
+                        if col == 3:  # Checkbox column
+                                state = "Checked" if value == "1" else "Unchecked"
+                                value_display = state
+                        else:
+                                value_display = value if value else "(empty)"
+
+                        self.main_frame.update_status_bar(
+                                f"Grid: {self.grid.GetNumberRows()}×{self.grid.GetNumberCols()}",
+                                f"Role: Grid cell, Row {row + 1}, Col {col + 1} ({col_name}): {value_display}",
+                                "Arrow keys to navigate, F2 to edit, Space for checkboxes"
+                        )
+                event.Skip()
         
     # State management
     def save_state(self):
-                """Save tab state for persistence between runs.
+        """Save tab state for persistence between runs.
 
-                Returns a JSON-serializable dict describing the tab state. Schema:
-                {
-                    "grid_data": <original generated data structure, list of rows>,
-                    "cell_values": [[str,...], ...],  # actual string values from visible cells
-                    "cursor_row": int,
-                    "cursor_col": int
-                }
+        Returns a JSON-serializable dict describing the tab state. Schema:
+        {
+            "grid_data": <original generated data structure, list of rows>,
+            "cell_values": [[str,...], ...],  # actual string values from visible cells
+            "cursor_row": int,
+            "cursor_col": int
+        }
 
-                Notes / choices:
-                - `grid_data` preserves the higher-level dataset used to populate the grid
-                    (useful for re-generating or diffing rows).
-                - `cell_values` are saved as strings, since wx.Grid represents values as strings.
-                - Consumers should validate the returned dict before writing to disk.
+        Notes / choices:
+        - `grid_data` preserves the higher-level dataset used to populate the grid
+          (useful for re-generating or diffing rows).
+        - `cell_values` are saved as strings, since wx.Grid represents values as strings.
+        - Consumers should validate the returned dict before writing to disk.
 
-                Error modes:
-                - If an exception occurs while reading cells (rare), the method should
-                    raise to the caller so state save can be retried or aborted safely.
-                """
+        Error modes:
+        - If an exception occurs while reading cells (rare), the method should
+          raise to the caller so state save can be retried or aborted safely.
+        """
         # Save all cell values
         cell_values = []
         for row in range(self.grid.GetNumberRows()):
@@ -356,33 +357,33 @@ class GridTab(wx.Panel, TabStateHelper):
         }
         
     def load_state(self, state):
-                """Load tab state previously returned by `save_state`.
+        """Load tab state previously returned by `save_state`.
 
-                Expected input: the same schema described in `save_state`.
+        Expected input: the same schema described in `save_state`.
 
-                Behavior:
-                - Restore `self.grid_data` when present, then write `cell_values` into
-                    the visible grid cells when sizes match.
-                - Restore the grid cursor and make the cell visible.
+        Behavior:
+        - Restore `self.grid_data` when present, then write `cell_values` into
+          the visible grid cells when sizes match.
+        - Restore the grid cursor and make the cell visible.
 
-                Robustness:
-                - This method performs bounds checks before writing into the grid.
-                - If the saved state contains more rows/columns than the current grid,
-                    excess values are ignored. If fewer, missing cells are left unchanged.
+        Robustness:
+        - This method performs bounds checks before writing into the grid.
+        - If the saved state contains more rows/columns than the current grid,
+          excess values are ignored. If fewer, missing cells are left unchanged.
 
-                Accessibility:
-                - After restoring state, `_update_info_label` is called so the information
-                    shown to screen readers reflects the restored state.
-                """
+        Accessibility:
+        - After restoring state, `_update_info_label` is called so the information
+          shown to screen readers reflects the restored state.
+        """
         if "grid_data" in state:
             self.grid_data = state["grid_data"]
-            
+
         if "cell_values" in state:
             for row, row_values in enumerate(state["cell_values"]):
                 for col, value in enumerate(row_values):
                     if row < self.grid.GetNumberRows() and col < self.grid.GetNumberCols():
                         self.grid.SetCellValue(row, col, value)
-                        
+
         if "cursor_row" in state and "cursor_col" in state:
             row = state["cursor_row"]
             col = state["cursor_col"]
@@ -390,20 +391,20 @@ class GridTab(wx.Panel, TabStateHelper):
                 if row < self.grid.GetNumberRows() and col < self.grid.GetNumberCols():
                     self.grid.SetGridCursor(row, col)
                     self.grid.MakeCellVisible(row, col)
-                    
+
         self._update_info_label()
-        
+
     def reset_to_defaults(self):
-                """Reset the tab to default generated test data.
+        """Reset the tab to default generated test data.
 
-                This restores `self.grid_data` with freshly generated data, repopulates
-                the visible grid, updates computed labels, and sets the focus cursor
-                to the first cell. Useful for returning to a known baseline during tests.
+        This restores `self.grid_data` with freshly generated data, repopulates
+        the visible grid, updates computed labels, and sets the focus cursor
+        to the first cell. Useful for returning to a known baseline during tests.
 
-                Notes:
-                - Callers should ensure that any unsaved state is persisted before calling
-                    this method.
-                """
+        Notes:
+        - Callers should ensure that any unsaved state is persisted before calling
+          this method.
+        """
         self.grid_data = generate_grid_data(20, 10)
         self._populate_grid()
         self._update_info_label()

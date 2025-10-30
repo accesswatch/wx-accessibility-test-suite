@@ -1,6 +1,5 @@
-"""
-Buttons & Toolbar Tab
-=====================
+"""Buttons & Toolbar Tab.
+
 Tests for button variants, toolbar, and info bar controls.
 """
 
@@ -12,6 +11,7 @@ class ButtonsToolbarTab(wx.Panel, TabStateHelper):
     """Tab containing button variants, toolbar, and info bar controls."""
     
     def __init__(self, parent, main_frame):
+        """Initialize buttons & toolbar tab and build UI."""
         super().__init__(parent)
         self.main_frame = main_frame
         self.tab_name = "Buttons & Toolbar"
@@ -34,6 +34,7 @@ class ButtonsToolbarTab(wx.Panel, TabStateHelper):
         self.SetSizer(panel_sizer)
         
     def GetName(self):
+        """Return human-readable tab name."""
         return self.tab_name
         
     def _create_bitmap_button_group(self, parent):

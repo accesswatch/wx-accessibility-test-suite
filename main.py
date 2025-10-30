@@ -1,8 +1,8 @@
-"""
-wxPython Accessibility Test Suite
-==================================
-Comprehensive test application for validating keyboard navigation and screen reader
-accessibility of wxPython controls according to WCAG 2.2 AA guidelines.
+"""wxPython Accessibility Test Suite.
+
+Comprehensive test application for validating keyboard navigation and
+screen reader accessibility of wxPython controls according to WCAG 2.2
+AA guidelines.
 
 Target: Windows with NVDA/JAWS/Narrator
 Python: 3.10-3.13
@@ -34,6 +34,10 @@ class AccessibilityTestFrame(wx.Frame):
     """Main application frame with tabbed interface for control testing."""
     
     def __init__(self):
+        """Initialize the main application frame and build the UI.
+
+        Sets up menu, status bar, notebook tabs, and loads saved state.
+        """
         super().__init__(
             parent=None,
             title="wxPython Accessibility Test Suite - WCAG 2.2 AA Validation",
