@@ -1,6 +1,5 @@
-"""
-Media & Link Controls Tab
-==========================
+"""Media & Link Controls Tab.
+
 Tests for media, hyperlink, and specialized picker controls.
 """
 
@@ -13,6 +12,7 @@ class MediaControlsTab(wx.Panel, TabStateHelper):
     """Tab containing media, hyperlink, and picker controls."""
     
     def __init__(self, parent, main_frame):
+        """Initialize media and link controls tab and wire event handlers."""
         super().__init__(parent)
         self.main_frame = main_frame
         self.tab_name = "Media & Link Controls"
@@ -36,6 +36,7 @@ class MediaControlsTab(wx.Panel, TabStateHelper):
         self.SetSizer(panel_sizer)
         
     def GetName(self):
+        """Return human-readable tab name."""
         return self.tab_name
         
     def _create_hyperlink_group(self, parent):

@@ -1,6 +1,5 @@
-"""
-Basic Controls Tab
-==================
+"""Basic Controls Tab.
+
 Tests for basic wxPython controls: Button, TextCtrl, CheckBox, RadioBox, Choice, ComboBox, ListBox.
 Demonstrates keyboard navigation and screen reader accessibility.
 """
@@ -17,6 +16,7 @@ class BasicControlsTab(wx.Panel, TabStateHelper):
     """Tab containing basic input controls for accessibility testing."""
     
     def __init__(self, parent, main_frame):
+        """Initialize basic controls tab and build UI."""
         super().__init__(parent)
         self.main_frame = main_frame
         self.tab_name = "Basic Controls"
@@ -44,6 +44,7 @@ class BasicControlsTab(wx.Panel, TabStateHelper):
         self.SetSizer(panel_sizer)
         
     def GetName(self):
+        """Return human-readable tab name."""
         return self.tab_name
         
     def _create_button_group(self, parent):

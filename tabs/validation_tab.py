@@ -1,6 +1,5 @@
-"""
-Validation Tab
-==============
+"""Validation Tab.
+
 WCAG 2.2 AA validation checklist and testing documentation.
 Allows testers to mark criteria as validated with notes.
 """
@@ -15,6 +14,7 @@ class ValidationTab(wx.Panel, TabStateHelper):
     """Tab for WCAG validation checklist and documentation."""
     
     def __init__(self, parent, main_frame):
+        """Initialize validation tab and build checklist/documentation UI."""
         super().__init__(parent)
         self.main_frame = main_frame
         self.tab_name = "Validation & Documentation"
@@ -41,6 +41,7 @@ class ValidationTab(wx.Panel, TabStateHelper):
         self.SetSizer(sizer)
         
     def GetName(self):
+        """Return human-readable tab name."""
         return self.tab_name
         
     def _create_checklist_panel(self, parent):

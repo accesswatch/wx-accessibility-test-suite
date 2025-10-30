@@ -1,6 +1,5 @@
-"""
-TreeCtrl Tab
-============
+"""TreeCtrl Tab.
+
 Tests for wx.TreeCtrl with checkboxes (including tri-state for parent nodes).
 Demonstrates hierarchical navigation with checkbox support.
 """
@@ -14,6 +13,7 @@ class TreeCtrlTab(wx.Panel, TabStateHelper):
     """Tab containing TreeCtrl with checkboxes for accessibility testing."""
     
     def __init__(self, parent, main_frame):
+        """Initialize TreeCtrl tab and populate tree controls."""
         super().__init__(parent)
         self.main_frame = main_frame
         self.tab_name = "TreeCtrl with Checkboxes"
@@ -85,6 +85,7 @@ class TreeCtrlTab(wx.Panel, TabStateHelper):
         self.SetSizer(main_sizer)
         
     def GetName(self):
+        """Return human-readable tab name."""
         return self.tab_name
         
     def _create_checkbox_bitmap(self, checked, mixed):

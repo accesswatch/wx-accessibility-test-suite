@@ -1,6 +1,5 @@
-"""
-State Manager
-=============
+"""State Manager.
+
 Handles serialization and deserialization of application state to JSON files.
 """
 
@@ -14,6 +13,11 @@ class StateManager:
     """Manages loading and saving application state."""
     
     def __init__(self, state_dir: str = "state"):
+        """Create a StateManager and ensure the state directory exists.
+
+        Args:
+            state_dir: Directory path where state files are stored.
+        """
         self.state_dir = Path(state_dir)
         self.state_dir.mkdir(exist_ok=True)
         self.state_file = self.state_dir / "app_state.json"

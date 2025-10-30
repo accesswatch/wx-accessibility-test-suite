@@ -1,6 +1,5 @@
-"""
-ListCtrl Views Tab
-==================
+"""ListCtrl Views Tab.
+
 Tests for wx.ListCtrl with multiple view modes: Report, List, Icon, Small Icon.
 Demonstrates view switching and accessibility across different display modes.
 Tests controls WITHOUT checkboxes to verify pure list/icon navigation.
@@ -15,6 +14,7 @@ class ListCtrlViewsTab(wx.Panel, TabStateHelper):
     """Tab containing ListCtrl with switchable views (NO checkboxes)."""
     
     def __init__(self, parent, main_frame):
+        """Initialize the ListCtrl views tab and build UI controls."""
         super().__init__(parent)
         self.main_frame = main_frame
         self.tab_name = "ListCtrl Multiple Views"
@@ -93,6 +93,7 @@ class ListCtrlViewsTab(wx.Panel, TabStateHelper):
         self.SetSizer(main_sizer)
         
     def GetName(self):
+        """Return human-readable tab name."""
         return self.tab_name
         
     def _create_icons(self):
@@ -133,14 +134,14 @@ class ListCtrlViewsTab(wx.Panel, TabStateHelper):
         return priority_map.get(priority, 2)  # Default to Low (green)
         
     def _setup_report_view(self):
-        """Setup Report view (multi-column table).
-        
+        """Set up Report view (multi-column table).
+
         Report view features:
         - Multiple columns with headers
         - Sortable by clicking headers
         - Cell navigation with arrows
         - Best for detailed data
-        
+
         Screen readers announce:
         - Column headers
         - Row position
@@ -166,14 +167,14 @@ class ListCtrlViewsTab(wx.Panel, TabStateHelper):
             self.list_ctrl.SetItemData(index, idx)
             
     def _setup_list_view(self):
-        """Setup List view (single column, vertical).
-        
+        """Set up List view (single column, vertical).
+
         List view features:
         - Single column (labels only)
         - Simple vertical list
         - Compact display
         - Best for simple item selection
-        
+
         Screen readers announce:
         - Item label
         - Position (e.g., "3 of 50")
@@ -189,14 +190,14 @@ class ListCtrlViewsTab(wx.Panel, TabStateHelper):
             self.list_ctrl.SetItemData(index, idx)
             
     def _setup_icon_view(self):
-        """Setup Icon view (large icons with labels).
-        
+        """Set up Icon view (large icons with labels).
+
         Icon view features:
         - Large icons (32x32 or larger)
         - Text labels below icons
         - Grid layout (wraps like icons on desktop)
         - Best for visual browsing
-        
+
         Screen readers announce:
         - Item label
         - Icon description (if available)
@@ -212,14 +213,14 @@ class ListCtrlViewsTab(wx.Panel, TabStateHelper):
             self.list_ctrl.SetItemData(index, idx)
             
     def _setup_small_icon_view(self):
-        """Setup Small Icon view (small icons with labels).
-        
+        """Set up Small Icon view (small icons with labels).
+
         Small Icon view features:
         - Small icons (16x16)
         - Compact grid layout
         - More items visible
         - Best for browsing many items
-        
+
         Screen readers announce:
         - Item label
         - Position
