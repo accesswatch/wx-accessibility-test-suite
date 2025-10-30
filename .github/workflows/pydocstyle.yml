@@ -1,0 +1,47 @@
+name: Python Documentation Style Check
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  pydocstyle-check:
+    runs-on: ubuntu-latest
+    name: Documentation Style and Syntax Check
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install pydocstyle
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install pydocstyle
+      
+      - name: Run pydocstyle
+        run: |
+          echo "Running pydocstyle on all Python files..."
+          python -m pydocstyle .
+          echo "✓ pydocstyle check passed"
+      
+      - name: Run Python syntax check
+        run: |
+          echo "Checking Python syntax for all .py files..."
+          python -c "import py_compile, glob; files = glob.glob('**/*.py', recursive=True); print(f'Checking {len(files)} Python files...'); [py_compile.compile(f, doraise=True) for f in files]; print('✓ All Python files compiled successfully')"
+      
+      - name: Summary
+        if: success()
+        run: |
+          echo "### ✅ All checks passed!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- ✓ pydocstyle: All docstrings comply with PEP 257" >> $GITHUB_STEP_SUMMARY
+          echo "- ✓ py_compile: All Python files have valid syntax" >> $GITHUB_STEP_SUMMARY
