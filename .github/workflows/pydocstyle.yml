@@ -1,0 +1,33 @@
+name: Pydocstyle
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  pydocstyle:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x'
+    
+    - name: Install pydocstyle
+      run: |
+        python -m pip install --upgrade pip
+        pip install pydocstyle
+    
+    - name: Run pydocstyle
+      run: |
+        python -m pydocstyle .
+    
+    - name: Verify Python compilation
+      run: |
+        python -c "import py_compile,glob; [py_compile.compile(f,doraise=True) for f in glob.glob('**/*.py', recursive=True)]"
