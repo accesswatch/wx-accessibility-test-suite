@@ -32,4 +32,8 @@ jobs:
     
     - name: Verify Python compilation
       run: |
-        python -c "import py_compile,glob; [py_compile.compile(f,doraise=True) for f in glob.glob('**/*.py', recursive=True)]"
+        python -c "import py_compile
+import glob
+for f in glob.glob('**/*.py', recursive=True):
+    py_compile.compile(f, doraise=True)
+"
