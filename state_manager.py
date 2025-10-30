@@ -6,6 +6,7 @@ Handles serialization and deserialization of application state to JSON files.
 import json
 from pathlib import Path
 from typing import Dict, Any
+import logging
 import wx
 
 
@@ -67,7 +68,8 @@ class StateManager:
             with open(self.state_file, 'w', encoding='utf-8') as f:
                 json.dump(state, f, indent=2, ensure_ascii=False)
         except Exception as e:
-            print(f"Error saving state: {e}")
+            logger = logging.getLogger(__name__)
+            logger.exception("Error saving state")
             
     def load_state(self, frame):
         """Load application state from JSON.
@@ -124,7 +126,8 @@ class StateManager:
                         tab.load_state(state["tabs"][tab_name])
                         
         except Exception as e:
-            print(f"Error loading state: {e}")
+            logger = logging.getLogger(__name__)
+            logger.exception("Error loading state")
 
 
 class TabStateHelper:
