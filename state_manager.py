@@ -9,6 +9,9 @@ from typing import Dict, Any
 import logging
 import wx
 
+# Module-level logger
+logger = logging.getLogger(__name__)
+
 
 class StateManager:
     """Manages loading and saving application state."""
@@ -67,8 +70,7 @@ class StateManager:
         try:
             with open(self.state_file, 'w', encoding='utf-8') as f:
                 json.dump(state, f, indent=2, ensure_ascii=False)
-        except Exception as e:
-            logger = logging.getLogger(__name__)
+        except Exception:
             logger.exception("Error saving state")
             
     def load_state(self, frame):
@@ -125,8 +127,7 @@ class StateManager:
                     if tab_name in state["tabs"] and hasattr(tab, 'load_state'):
                         tab.load_state(state["tabs"][tab_name])
                         
-        except Exception as e:
-            logger = logging.getLogger(__name__)
+        except Exception:
             logger.exception("Error loading state")
 
 
