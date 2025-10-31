@@ -36,6 +36,7 @@ class GridTab(wx.Panel, TabStateHelper):
         # Create Grid
         self.grid = wx.grid.Grid(self)
         self.grid.CreateGrid(20, 10)
+        self.grid.EnableEditing(True)
         
         # Set column labels from header row
         headers = self.grid_data[0]
