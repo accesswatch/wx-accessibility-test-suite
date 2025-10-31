@@ -702,11 +702,13 @@ class AdvancedMediaTab(wx.Panel, TabStateHelper):
         """
         # Extract all property values (skip category headers)
         props = {}
-        for i in range(self.propgrid.GetPropertyCount()):
-            prop = self.propgrid.Item(i)
+        iterator = self.propgrid.GetIterator()
+        while not iterator.AtEnd():
+            prop = iterator.GetProperty()
             if prop and not isinstance(prop, wxpg.PropertyCategory):
                 # Convert all values to strings for JSON compatibility
                 props[prop.GetName()] = str(prop.GetValue())
+            iterator.Next()
                 
         return {
             "richtext": self.richtext.GetValue(),
