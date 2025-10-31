@@ -53,6 +53,8 @@ glen/
 │   ├── advanced_controls2_tab.py   # SpinCtrlDouble, AuiNotebook
 │   ├── advanced_media_tab.py       # RichTextCtrl, PropertyGrid, DataViewCtrl, MediaCtrl
 │   ├── advanced_controls3_tab.py   # HtmlWindow, GenericDirCtrl, StyledTextCtrl, Notebook
+│   ├── advanced_controls4_tab.py   # SplitterWindow, Listbook, Choicebook, ActivityIndicator, EditableListBox, RearrangeCtrl
+│   ├── advanced_controls5_tab.py   # Treebook, Toolbook, AnimationCtrl, CommandLinkButton, HtmlListBox, FileCtrl
 │   └── validation_tab.py           # WCAG validation checklist and documentation
 ├── state/                 # Application state (auto-generated)
 │   └── app_state.json    # Saved control states
@@ -187,7 +189,29 @@ Tests HTML rendering, directory navigation, code editing, and nested tabbing:
   - Three sample tabs: Text Controls, Buttons, List
   - Screen reader announces current nested tab
 
-### 11. Validation & Documentation Tab
+### 11. Advanced Controls 4 Tab
+
+Tests container and specialized controls:
+
+- **SplitterWindow**: Resizable split panels with nested splitters (3 instances - vertical and horizontal)
+- **Listbook**: List-based sidebar page navigation (4 pages)
+- **Choicebook**: Dropdown-based page navigation (4 pages)
+- **ActivityIndicator**: Animated loading spinner with start/stop controls
+- **EditableListBox**: List with New/Edit/Delete buttons for item management
+- **RearrangeCtrl**: List with checkboxes and Move Up/Down buttons for reordering
+
+### 12. Advanced Controls 5 Tab
+
+Tests final missing controls for complete coverage:
+
+- **Treebook**: Hierarchical tree-based page navigation (7 pages in chapters with subsections)
+- **Toolbook**: Toolbar icon-based page navigation (4 pages with icons)
+- **AnimationCtrl**: Animated GIF playback control with play/stop buttons
+- **CommandLinkButton**: Windows Vista+ style buttons with main text and descriptive notes (3 instances)
+- **HtmlListBox**: List box with HTML-formatted items (10 items with bold, italic, colors)
+- **FileCtrl**: Embedded file system browser with filtering and multi-select support
+
+### 13. Validation & Documentation Tab
 
 Testing checklist and reference:
 
@@ -570,13 +594,22 @@ For issues or questions about wxPython accessibility, refer to:
 
 ## Version History
 
+- **1.2** (2025-10-30): Complete control coverage
+  - Added Advanced Controls 3 tab: HtmlWindow, GenericDirCtrl, StyledTextCtrl, embedded Notebook
+  - Added Advanced Controls 4 tab: SplitterWindow, Listbook, Choicebook, ActivityIndicator, EditableListBox, RearrangeCtrl
+  - Added Advanced Controls 5 tab: Treebook, Toolbook, AnimationCtrl, CommandLinkButton, HtmlListBox, FileCtrl
+  - 13 tabs with 70+ control types (100% coverage of common wxPython controls)
+  - All controls fully keyboard accessible with state persistence
+
 - **1.1** (2025-10-30): Extended control coverage
-  - Added Advanced Controls 3 tab with HtmlWindow, GenericDirCtrl, StyledTextCtrl, embedded Notebook
+  - Added Media & Link Controls tab: HyperlinkCtrl, SearchCtrl, pickers, CalendarCtrl
+  - Added Buttons & Toolbar tab: BitmapButton, Toolbar, InfoBar, ScrollBar
+  - Added Advanced Controls 2 tab: SpinCtrlDouble, AuiNotebook
+  - Added Advanced Media & Data tab: RichTextCtrl, PropertyGrid, DataViewCtrl, MediaCtrl
   - Fixed Grid keyboard navigation (EnableEditing)
   - Fixed toolbar state save (IsToggled vs IsToggle)
   - Fixed PropertyGrid iteration (GetIterator vs GetPropertyCount)
-  - Improved logging throughout (replaced print statements)
-  - 12 tabs with 50+ control types
+  - 10 tabs with 64+ control types
 
 - **1.0** (2025-10-29): Initial release
   - 11 tabs with 45+ control types

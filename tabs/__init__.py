@@ -11,6 +11,8 @@ from tabs.buttons_toolbar_tab import ButtonsToolbarTab
 from tabs.advanced_controls2_tab import AdvancedControls2Tab
 from tabs.advanced_media_tab import AdvancedMediaTab
 from tabs.advanced_controls3_tab import AdvancedControls3Tab
+from tabs.advanced_controls4_tab import AdvancedControls4Tab
+from tabs.advanced_controls5_tab import AdvancedControls5Tab
 
 __all__ = [
     'BasicControlsTab',
@@ -23,5 +25,7 @@ __all__ = [
     'ButtonsToolbarTab',
     'AdvancedControls2Tab',
     'AdvancedMediaTab',
-    'AdvancedControls3Tab'
+    'AdvancedControls3Tab',
+    'AdvancedControls4Tab',
+    'AdvancedControls5Tab'
 ]
