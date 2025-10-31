@@ -27,6 +27,7 @@ from tabs.buttons_toolbar_tab import ButtonsToolbarTab
 from tabs.advanced_controls2_tab import AdvancedControls2Tab
 from tabs.advanced_media_tab import AdvancedMediaTab
 from tabs.advanced_controls4_tab import AdvancedControls4Tab
+from tabs.advanced_controls5_tab import AdvancedControls5Tab
 
 from state_manager import StateManager
 
@@ -148,8 +149,8 @@ class AccessibilityTestFrame(wx.Frame):
         Tabs are ordered from simple to complex:
         1. Basic controls (buttons, text, checkboxes)
         2-4. Complex lists/trees/grids with embedded checkboxes
-        5-10. Advanced controls (pickers, media, toolbars, splitters, etc.)
-        11. Validation checklist and documentation
+        5-11. Advanced controls (pickers, media, toolbars, splitters, books, etc.)
+        12. Validation checklist and documentation
         
         Each tab inherits from TabStateHelper to support state persistence.
         """
@@ -167,6 +168,7 @@ class AccessibilityTestFrame(wx.Frame):
         self.tabs.append(AdvancedControls2Tab(self.notebook, self))
         self.tabs.append(AdvancedMediaTab(self.notebook, self))
         self.tabs.append(AdvancedControls4Tab(self.notebook, self))
+        self.tabs.append(AdvancedControls5Tab(self.notebook, self))
         self.tabs.append(ValidationTab(self.notebook, self))
         
         # Add tabs to notebook
