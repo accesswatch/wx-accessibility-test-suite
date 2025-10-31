@@ -427,7 +427,7 @@ class ButtonsToolbarTab(wx.Panel, TabStateHelper):
         toolbar_state = {}
         for tool_id in [wx.ID_NEW, wx.ID_OPEN, wx.ID_SAVE]:
             tool = self.toolbar.FindById(tool_id)
-            if tool and tool.IsToggle():
+            if tool and tool.IsToggled():
                 toolbar_state[tool_id] = self.toolbar.GetToolState(tool_id)
                 
         return {
