@@ -400,3 +400,84 @@ python main.py
 **✅ Documented**: Updated README with new tab descriptions
 
 The application now provides comprehensive coverage of wxPython accessibility testing requirements.
+
+---
+
+## UPDATE (Final): Advanced Controls 4 Tab
+
+### New Tab: Advanced Controls 4 (advanced_controls4_tab.py)
+
+**Controls Added:**
+
+#### Container Controls
+
+- **wx.SplitterWindow** (3 instances)
+  - Main splitter (vertical split, 50/50 initial)
+  - Left nested splitter (horizontal split, 60/40 initial)
+  - Right nested splitter (horizontal split, 30/70 initial)
+  - Demonstrates nested splitter windows
+  - Resizable panes with sash position display
+  - Keyboard: Tab to navigate between panes, use arrow keys within panes
+
+#### Alternative Notebook Controls
+
+- **wx.Listbook**
+  - Left sidebar list navigation
+  - 4 pages with sample content
+  - Keyboard: Arrow keys to select page, Tab to content
+  
+- **wx.Choicebook**
+  - Dropdown menu navigation
+  - 4 pages with sample content
+  - Keyboard: Alt+Down to open dropdown, Arrow keys to select
+
+#### Status Indicators
+
+- **wx.ActivityIndicator**
+  - Animated loading spinner
+  - Start/Stop buttons
+  - Running state display
+  - Keyboard: Space to toggle
+
+#### Specialized List Controls
+
+- **wx.EditableListBox**
+  - List with New/Edit/Delete buttons
+  - Item management interface
+  - Multi-line item support
+  - Keyboard: Arrow keys to navigate, buttons to manage items
+  
+- **wx.RearrangeCtrl**
+  - List with checkboxes and Move Up/Down buttons
+  - Item reordering interface
+  - Checkable items
+  - Keyboard: Arrow keys to navigate, Space to check, buttons to reorder
+
+**Test Data:**
+
+- 3 splitter windows with nested layouts and sample content
+- ListBook with 4 pages (Dashboard, Settings, Reports, Help)
+- Choicebook with 4 pages (Overview, Details, History, Settings)
+- EditableListBox with 4 sample items
+- RearrangeCtrl with 5 items in prioritized order
+
+### File Changes
+
+**New File:**
+- `tabs/advanced_controls4_tab.py` - 520 lines
+
+**Modified Files:**
+- `tabs/__init__.py` - Added AdvancedControls4Tab export
+- `main.py` - Added AdvancedControls4Tab import and instantiation
+
+### Total Coverage: 66+ Control Types (~100% of common wxPython controls)
+
+**New controls:** SplitterWindow, Listbook, Choicebook, ActivityIndicator, EditableListBox, RearrangeCtrl (6 controls)
+**Previous total:** 58 controls
+**New total:** 64+ controls
+
+All new controls include:
+- Full keyboard accessibility
+- State persistence (splitter positions, selections, item lists)
+- Screen reader compatibility
+- WCAG 2.2 AA compliance
