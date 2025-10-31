@@ -154,9 +154,10 @@ class AccessibilityTestFrame(wx.Frame):
         
         Tabs are ordered from simple to complex:
         1. Basic controls (buttons, text, checkboxes)
-        2-4. Complex lists/trees/grids with embedded checkboxes
-        5-9. Advanced controls (pickers, media, toolbars, etc.)
-        10. Validation checklist and documentation
+        2-5. Complex lists/trees/grids with embedded checkboxes
+        6-10. Advanced controls (pickers, media, toolbars, etc.)
+        11. HTML, directory tree, code editor, nested notebook
+        12. Validation checklist and documentation
         
         Each tab inherits from TabStateHelper to support state persistence.
         """

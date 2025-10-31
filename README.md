@@ -42,12 +42,18 @@ glen/
 ├── README.md              # This file
 ├── tabs/                  # Control test tabs
 │   ├── __init__.py
-│   ├── basic_controls_tab.py      # Buttons, TextCtrl, CheckBox, RadioBox, Choice, ListBox
-│   ├── listctrl_tab.py            # ListCtrl with embedded checkboxes (100+ rows)
-│   ├── treectrl_tab.py            # TreeCtrl with checkboxes and tri-state parents
-│   ├── grid_tab.py                # Grid with checkbox cells, mixed types
-│   ├── advanced_controls_tab.py   # ToggleButton, Pickers, Spinners, Sliders, Containers
-│   └── validation_tab.py          # WCAG validation checklist and documentation
+│   ├── basic_controls_tab.py       # Buttons, TextCtrl, CheckBox, RadioBox, Choice, ListBox
+│   ├── listctrl_tab.py             # ListCtrl with embedded checkboxes (100+ rows)
+│   ├── listctrl_views_tab.py      # ListCtrl view modes (Report, List, Icon, Small Icon)
+│   ├── treectrl_tab.py             # TreeCtrl with checkboxes and tri-state parents
+│   ├── grid_tab.py                 # Grid with checkbox cells, mixed types
+│   ├── advanced_controls_tab.py    # ToggleButton, Pickers, Spinners, Sliders, Containers
+│   ├── media_controls_tab.py       # HyperlinkCtrl, SearchCtrl, Pickers, CalendarCtrl
+│   ├── buttons_toolbar_tab.py      # BitmapButton, Toolbar, InfoBar, ScrollBar
+│   ├── advanced_controls2_tab.py   # SpinCtrlDouble, AuiNotebook
+│   ├── advanced_media_tab.py       # RichTextCtrl, PropertyGrid, DataViewCtrl, MediaCtrl
+│   ├── advanced_controls3_tab.py   # HtmlWindow, GenericDirCtrl, StyledTextCtrl, Notebook
+│   └── validation_tab.py           # WCAG validation checklist and documentation
 ├── state/                 # Application state (auto-generated)
 │   └── app_state.json    # Saved control states
 └── logs/                  # Event logs (auto-generated)
@@ -152,7 +158,36 @@ Tests specialized media and data controls:
 - **DataViewCtrl**: High-performance virtual list with 50 rows, sorting, multi-select
 - **MediaCtrl**: Audio/video player with load/play/pause/stop/volume controls
 
-### 10. Validation & Documentation Tab
+### 10. Advanced Controls 3 Tab
+
+Tests HTML rendering, directory navigation, code editing, and nested tabbing:
+
+- **HtmlWindow**: HTML content rendering with keyboard link navigation
+  - Tab key navigates between hyperlinks
+  - Enter/Space to activate links
+  - Screen reader announces HTML semantics (headings, lists, tables, links)
+  - Demonstrates accessible HTML structure
+- **GenericDirCtrl**: Directory tree browser
+  - Arrow keys to navigate folder hierarchy
+  - Right arrow to expand, left to collapse
+  - Type-ahead search for quick navigation
+  - Screen reader distinguishes folders from files
+  - Starts at user's home directory
+- **StyledTextCtrl**: Code editor with syntax highlighting
+  - Python syntax highlighting (keywords, strings, comments, functions)
+  - Line numbers in margin
+  - Code folding support
+  - Standard editing shortcuts (Ctrl+C/V/X/Z/Y)
+  - Home/End for line navigation, Ctrl+Home/End for document
+  - Cursor position announced (line and column)
+- **Embedded wx.Notebook**: Nested tabbed interface
+  - Tests nested tab navigation (Ctrl+Tab to switch tabs)
+  - Tab key to navigate controls within nested tabs
+  - Verifies focus management between parent and child tab controls
+  - Three sample tabs: Text Controls, Buttons, List
+  - Screen reader announces current nested tab
+
+### 11. Validation & Documentation Tab
 
 Testing checklist and reference:
 
@@ -203,6 +238,10 @@ All controls are pre-populated with realistic test data:
 - Spin/slider positions
 - Gauge progress values
 - Collapsible pane expansion state
+- **HtmlWindow**: Current HTML content
+- **GenericDirCtrl**: Selected directory path
+- **StyledTextCtrl**: Code editor text and cursor position
+- **Embedded Notebook**: Selected nested tab and control values
 - **Validation progress**: Tester name, checked criteria, notes per criterion
 
 ### State Files
@@ -280,6 +319,37 @@ All controls are pre-populated with realistic test data:
 - **Enter**: Activate item
 - **Escape**: Close menu
 
+#### HtmlWindow
+
+- **Tab**: Navigate between hyperlinks
+- **Shift+Tab**: Navigate backwards through links
+- **Enter or Space**: Activate focused link
+- **Arrow Keys**: Scroll content (in some implementations)
+
+#### GenericDirCtrl (Directory Tree)
+
+- **Arrow Up/Down**: Navigate folders/files
+- **Arrow Right**: Expand folder / Move to first child
+- **Arrow Left**: Collapse folder / Move to parent
+- **\* (numpad)**: Expand all children
+- **Type letters**: Jump to matching folder/file name
+
+#### StyledTextCtrl (Code Editor)
+
+- **Standard editing**: Ctrl+C/X/V/Z/Y (Copy/Cut/Paste/Undo/Redo)
+- **Home/End**: Line start/end
+- **Ctrl+Home/End**: Document start/end
+- **Arrow Keys**: Navigate by character
+- **Ctrl+Arrow**: Navigate by word
+- **Page Up/Down**: Scroll by page
+
+#### Embedded Notebook
+
+- **Ctrl+Tab**: Switch to next nested tab
+- **Ctrl+Shift+Tab**: Switch to previous nested tab
+- **Tab**: Navigate controls within active nested tab
+- **Shift+Tab**: Navigate backwards within nested tab
+
 ## Screen Reader Testing
 
 ### Expected Announcements
@@ -302,6 +372,10 @@ For each control, screen readers should announce:
 - **ListCtrl Row**: "Row 5 of 100, Task column: Review documentation, Checkbox Unchecked"
 - **TreeCtrl Node**: "Documents Folder, Level 1, Expanded, Checkbox Mixed (2 of 5 checked)"
 - **Grid Cell**: "Row 3, Column 4 (Completed), Checkbox Checked, Editable"
+- **HTML Link**: "Link, wxPython Official Site, https://www.wxpython.org"
+- **Directory Tree**: "Folder, Documents, Collapsed, Level 2"
+- **Code Editor**: "Edit, Line 15, Column 8, def calculate_total"
+- **Nested Tab**: "Text Controls Tab, 1 of 3"
 
 ### Testing with NVDA
 
@@ -496,8 +570,16 @@ For issues or questions about wxPython accessibility, refer to:
 
 ## Version History
 
+- **1.1** (2025-10-30): Extended control coverage
+  - Added Advanced Controls 3 tab with HtmlWindow, GenericDirCtrl, StyledTextCtrl, embedded Notebook
+  - Fixed Grid keyboard navigation (EnableEditing)
+  - Fixed toolbar state save (IsToggled vs IsToggle)
+  - Fixed PropertyGrid iteration (GetIterator vs GetPropertyCount)
+  - Improved logging throughout (replaced print statements)
+  - 12 tabs with 50+ control types
+
 - **1.0** (2025-10-29): Initial release
-  - 6 tabs with 40+ control types
+  - 11 tabs with 45+ control types
   - Embedded checkboxes in ListCtrl, TreeCtrl, Grid
   - Tri-state tree parent nodes
   - Full state persistence
