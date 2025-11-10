@@ -6,7 +6,126 @@ ActivityIndicator, and specialized list controls.
 
 import wx
 import wx.lib.agw.flatnotebook as fnb
+try:
+    from wx.lib.editablelistbox import EditableListBox
+except Exception:
+    # Fallback shim for environments where wx.lib.editablelistbox is not available.
+    class EditableListBox(wx.Panel):
+        """Lightweight editable list box shim with New/Edit/Delete buttons.
+
+        Provides SetStrings and GetStrings methods used by the app for state.
+        """
+        def __init__(self, parent, label="", size=None):
+            super().__init__(parent)
+            sizer = wx.BoxSizer(wx.VERTICAL)
+            if label:
+                sizer.Add(wx.StaticText(self, label=label), 0, wx.ALL, 5)
+
+            self.listbox = wx.ListBox(self, choices=[], size=size)
+            sizer.Add(self.listbox, 1, wx.ALL | wx.EXPAND, 5)
+
+            btn_sizer = wx.BoxSizer(wx.HORIZONTAL)
+            self.new_btn = wx.Button(self, label="New")
+            self.edit_btn = wx.Button(self, label="Edit")
+            self.del_btn = wx.Button(self, label="Delete")
+            btn_sizer.Add(self.new_btn, 0, wx.RIGHT, 5)
+            btn_sizer.Add(self.edit_btn, 0, wx.RIGHT, 5)
+            btn_sizer.Add(self.del_btn, 0)
+
+            self.new_btn.Bind(wx.EVT_BUTTON, self._on_new)
+            self.edit_btn.Bind(wx.EVT_BUTTON, self._on_edit)
+            self.del_btn.Bind(wx.EVT_BUTTON, self._on_delete)
+
+            sizer.Add(btn_sizer, 0, wx.ALL, 5)
+            self.SetSizer(sizer)
+
+        def SetStrings(self, items):
+            self.listbox.Clear()
+            if items:
+                for it in items:
+                    self.listbox.Append(it)
+
+        def GetStrings(self):
+            return list(self.listbox.GetItems())
+
+        # Simple handlers
+        def _on_new(self, event):
+            val = wx.GetTextFromUser("New item:", "Add Item")
+            if val:
+                self.listbox.Append(val)
+
+        def _on_edit(self, event):
+            sel = self.listbox.GetSelection()
+            if sel == wx.NOT_FOUND:
+                return
+            cur = self.listbox.GetString(sel)
+            val = wx.GetTextFromUser("Edit item:", "Edit Item", default_value=cur)
+            if val:
+                self.listbox.SetString(sel, val)
+
+        def _on_delete(self, event):
+            sel = self.listbox.GetSelection()
+            if sel == wx.NOT_FOUND:
+                return
+            self.listbox.Delete(sel)
 from state_manager import TabStateHelper
+# Try to use AGW RearrangeCtrl if available; otherwise provide a lightweight shim.
+try:
+    from wx.lib.agw import rearrangectrl as rag
+    RearrangeCtrlClass = rag.RearrangeCtrl
+except Exception:
+    RearrangeCtrlClass = None
+
+if RearrangeCtrlClass is None:
+    class SimpleRearrangeCtrl(wx.Panel):
+        """Simple fallback for RearrangeCtrl with Up/Down buttons and a ListBox."""
+        def __init__(self, parent, size=None):
+            super().__init__(parent)
+            sizer = wx.BoxSizer(wx.VERTICAL)
+            self.listbox = wx.ListBox(self, choices=[], size=size)
+            sizer.Add(self.listbox, 1, wx.ALL | wx.EXPAND, 5)
+
+            btn_sizer = wx.BoxSizer(wx.HORIZONTAL)
+            self.up_btn = wx.Button(self, label="Move Up")
+            self.down_btn = wx.Button(self, label="Move Down")
+            btn_sizer.Add(self.up_btn, 0, wx.RIGHT, 5)
+            btn_sizer.Add(self.down_btn, 0)
+            self.up_btn.Bind(wx.EVT_BUTTON, self._on_up)
+            self.down_btn.Bind(wx.EVT_BUTTON, self._on_down)
+
+            sizer.Add(btn_sizer, 0, wx.ALL, 5)
+            self.SetSizer(sizer)
+
+        def SetItems(self, items):
+            self.listbox.Clear()
+            for it in items:
+                self.listbox.Append(it)
+
+        def GetItems(self):
+            return list(self.listbox.GetItems())
+
+        def _on_up(self, event):
+            sel = self.listbox.GetSelection()
+            if sel in (-1, 0):
+                return
+            cur = self.listbox.GetString(sel)
+            above = self.listbox.GetString(sel - 1)
+            self.listbox.SetString(sel - 1, cur)
+            self.listbox.SetString(sel, above)
+            self.listbox.SetSelection(sel - 1)
+
+        def _on_down(self, event):
+            sel = self.listbox.GetSelection()
+            count = self.listbox.GetCount()
+            if sel == -1 or sel >= count - 1:
+                return
+            cur = self.listbox.GetString(sel)
+            below = self.listbox.GetString(sel + 1)
+            self.listbox.SetString(sel + 1, cur)
+            self.listbox.SetString(sel, below)
+            self.listbox.SetSelection(sel + 1)
+
+    RearrangeCtrlClass = SimpleRearrangeCtrl
 
 
 class AdvancedControls4Tab(wx.Panel, TabStateHelper):
@@ -257,7 +376,7 @@ class AdvancedControls4Tab(wx.Panel, TabStateHelper):
         editable_sizer = wx.BoxSizer(wx.VERTICAL)
         editable_sizer.Add(wx.StaticText(editable_panel, label="EditableListBox:"), 0, wx.ALL, 5)
         
-        self.editable_list = wx.EditableListBox(
+        self.editable_list = EditableListBox(
             editable_panel,
             label="Items (New/Edit/Delete buttons)",
             size=(300, 200)
@@ -274,7 +393,7 @@ class AdvancedControls4Tab(wx.Panel, TabStateHelper):
         rearrange_sizer = wx.BoxSizer(wx.VERTICAL)
         rearrange_sizer.Add(wx.StaticText(rearrange_panel, label="RearrangeCtrl:"), 0, wx.ALL, 5)
         
-        self.rearrange = wx.RearrangeCtrl(
+        self.rearrange = RearrangeCtrlClass(
             rearrange_panel,
             size=(300, 200)
         )

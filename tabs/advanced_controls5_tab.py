@@ -253,8 +253,9 @@ class AdvancedControls5Tab(wx.Panel, TabStateHelper):
         # Command Link Buttons
         self.cmd_link1 = wx.adv.CommandLinkButton(
             parent,
-            label="Create New Project",
-            note="Start a new project from scratch with default settings"
+            wx.ID_ANY,
+            "Create New Project",
+            "Start a new project from scratch with default settings"
         )
         self.cmd_link1.Bind(wx.EVT_BUTTON, self.on_command_link)
         self.cmd_link1.SetToolTip("Command link button - Space/Enter to activate")
@@ -262,8 +263,9 @@ class AdvancedControls5Tab(wx.Panel, TabStateHelper):
         
         self.cmd_link2 = wx.adv.CommandLinkButton(
             parent,
-            label="Open Existing Project",
-            note="Browse and open a previously saved project file"
+            wx.ID_ANY,
+            "Open Existing Project",
+            "Browse and open a previously saved project file"
         )
         self.cmd_link2.Bind(wx.EVT_BUTTON, self.on_command_link)
         self.cmd_link2.SetToolTip("Command link button - Space/Enter to activate")
@@ -271,8 +273,9 @@ class AdvancedControls5Tab(wx.Panel, TabStateHelper):
         
         self.cmd_link3 = wx.adv.CommandLinkButton(
             parent,
-            label="Import from Template",
-            note="Create a new project based on an existing template or example"
+            wx.ID_ANY,
+            "Import from Template",
+            "Create a new project based on an existing template or example"
         )
         self.cmd_link3.Bind(wx.EVT_BUTTON, self.on_command_link)
         self.cmd_link3.SetToolTip("Command link button - Space/Enter to activate")
