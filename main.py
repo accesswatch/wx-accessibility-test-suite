@@ -165,16 +165,17 @@ class AccessibilityTestFrame(wx.Frame):
         self.notebook = wx.Notebook(self, style=wx.NB_TOP)
         
         # Create tabs in logical progression
+        # Order tabs from fundamental controls to advanced/system workflow tabs
         self.tabs.append(BasicControlsTab(self.notebook, self))
+        self.tabs.append(ButtonsToolbarTab(self.notebook, self))
         self.tabs.append(ListCtrlTab(self.notebook, self))
         self.tabs.append(ListCtrlViewsTab(self.notebook, self))  # Multiple view modes, no checkboxes
         self.tabs.append(TreeCtrlTab(self.notebook, self))
         self.tabs.append(GridTab(self.notebook, self))
-        self.tabs.append(AdvancedControlsTab(self.notebook, self))
         self.tabs.append(MediaControlsTab(self.notebook, self))
-        self.tabs.append(ButtonsToolbarTab(self.notebook, self))
-        self.tabs.append(AdvancedControls2Tab(self.notebook, self))
         self.tabs.append(AdvancedMediaTab(self.notebook, self))
+        self.tabs.append(AdvancedControlsTab(self.notebook, self))
+        self.tabs.append(AdvancedControls2Tab(self.notebook, self))
         self.tabs.append(AdvancedControls3Tab(self.notebook, self))
         self.tabs.append(AdvancedControls4Tab(self.notebook, self))
         self.tabs.append(AdvancedControls5Tab(self.notebook, self))

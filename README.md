@@ -64,6 +64,23 @@ glen/
 
 ## Features
 
+### Tab Order & Progression
+
+1. **Basic Controls Tab** – Foundational widgets (buttons, text inputs, choice controls).
+2. **Buttons & Toolbar Tab** – Bitmap buttons, toolbars, infobars, and scrollbars that expand on core activation tests.
+3. **ListCtrl with Checkboxes Tab** – Large data list with checkbox column for bulk selection scenarios.
+4. **ListCtrl View Modes Tab** – Same dataset rendered in Report/List/Icon/Small Icon modes to verify view-specific semantics.
+5. **TreeCtrl with Checkboxes Tab** – Hierarchical navigation with tri-state parents and checkbox propagation.
+6. **Grid with Checkbox Cells Tab** – Spreadsheet-style editing across mixed cell editors.
+7. **Media & Link Controls Tab** – Hyperlinks, search, pickers, and calendar/time controls.
+8. **Advanced Media & Data Tab** – RichTextCtrl, PropertyGrid, DataViewCtrl, and MediaCtrl.
+9. **Advanced Controls Tab** – Toggle buttons, sliders, gauges, and collapsible containers.
+10. **Advanced Controls 2 Tab** – SpinCtrlDouble plus AuiNotebook drag-reorder testing.
+11. **Advanced Controls 3 Tab** – HtmlWindow, GenericDirCtrl, StyledTextCtrl, and embedded Notebook.
+12. **Advanced Controls 4 Tab** – SplitterWindow, alternative notebooks, ActivityIndicator, and specialized lists.
+13. **Advanced Controls 5 Tab** – Treebook, Toolbook, AnimationCtrl, CommandLinkButton, HtmlListBox, and FileCtrl.
+14. **Validation & Documentation Tab** – WCAG checklist, documentation links, and workflow guidance.
+
 ### 1. Basic Controls Tab
 
 Tests fundamental input controls:
