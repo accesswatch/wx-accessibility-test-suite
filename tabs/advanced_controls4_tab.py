@@ -5,6 +5,7 @@ ActivityIndicator, and specialized list controls.
 """
 
 import wx
+import wx.adv
 import wx.lib.agw.flatnotebook as fnb
 from state_manager import TabStateHelper
 
@@ -257,7 +258,7 @@ class AdvancedControls4Tab(wx.Panel, TabStateHelper):
         editable_sizer = wx.BoxSizer(wx.VERTICAL)
         editable_sizer.Add(wx.StaticText(editable_panel, label="EditableListBox:"), 0, wx.ALL, 5)
         
-        self.editable_list = wx.EditableListBox(
+        self.editable_list = wx.adv.EditableListBox(
             editable_panel,
             label="Items (New/Edit/Delete buttons)",
             size=(300, 200)
@@ -274,10 +275,6 @@ class AdvancedControls4Tab(wx.Panel, TabStateHelper):
         rearrange_sizer = wx.BoxSizer(wx.VERTICAL)
         rearrange_sizer.Add(wx.StaticText(rearrange_panel, label="RearrangeCtrl:"), 0, wx.ALL, 5)
         
-        self.rearrange = wx.RearrangeCtrl(
-            rearrange_panel,
-            size=(300, 200)
-        )
         # Populate with sample items (order, label)
         items = [
             (0, "First Priority"),
@@ -285,7 +282,12 @@ class AdvancedControls4Tab(wx.Panel, TabStateHelper):
             (2, "Third Priority"),
             (3, "Fourth Priority")
         ]
-        self.rearrange.SetItems([label for _, label in items])
+        self.rearrange = wx.RearrangeCtrl(
+            rearrange_panel,
+            size=(300, 200),
+            order=[order for order, _ in items],
+            items=[label for _, label in items]
+        )
         
         rearrange_sizer.Add(self.rearrange, 1, wx.ALL | wx.EXPAND, 5)
         

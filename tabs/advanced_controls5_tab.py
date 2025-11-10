@@ -253,7 +253,8 @@ class AdvancedControls5Tab(wx.Panel, TabStateHelper):
         # Command Link Buttons
         self.cmd_link1 = wx.adv.CommandLinkButton(
             parent,
-            label="Create New Project",
+            wx.ID_ANY,
+            mainLabel="Create New Project",
             note="Start a new project from scratch with default settings"
         )
         self.cmd_link1.Bind(wx.EVT_BUTTON, self.on_command_link)
@@ -262,7 +263,8 @@ class AdvancedControls5Tab(wx.Panel, TabStateHelper):
         
         self.cmd_link2 = wx.adv.CommandLinkButton(
             parent,
-            label="Open Existing Project",
+            wx.ID_ANY,
+            mainLabel="Open Existing Project",
             note="Browse and open a previously saved project file"
         )
         self.cmd_link2.Bind(wx.EVT_BUTTON, self.on_command_link)
@@ -271,7 +273,8 @@ class AdvancedControls5Tab(wx.Panel, TabStateHelper):
         
         self.cmd_link3 = wx.adv.CommandLinkButton(
             parent,
-            label="Import from Template",
+            wx.ID_ANY,
+            mainLabel="Import from Template",
             note="Create a new project based on an existing template or example"
         )
         self.cmd_link3.Bind(wx.EVT_BUTTON, self.on_command_link)
