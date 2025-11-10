@@ -74,6 +74,14 @@ class ControlBrowserTab(wx.Panel, TabStateHelper):
         self.editor.SetToolTip("Edit descriptions and expectations. Press Save to persist.")
         box_sizer.Add(self.editor, 1, wx.EXPAND | wx.ALL, 6)
 
+        # Live preview area beneath the editor
+        preview_box = wx.StaticBox(self, label="Live Preview")
+        preview_sizer = wx.StaticBoxSizer(preview_box, wx.VERTICAL)
+        self.preview = wx.TextCtrl(self, style=wx.TE_MULTILINE | wx.TE_READONLY)
+        self.preview.SetMinSize((400, 120))
+        preview_sizer.Add(self.preview, 1, wx.EXPAND | wx.ALL, 6)
+        box_sizer.Add(preview_sizer, 0, wx.EXPAND | wx.ALL, 0)
+
         btn_sizer = wx.BoxSizer(wx.HORIZONTAL)
         self.save_btn = wx.Button(self, label="Save")
         self.save_btn.Bind(wx.EVT_BUTTON, self.on_save)
@@ -144,6 +152,13 @@ class ControlBrowserTab(wx.Panel, TabStateHelper):
             else:
                 # Replace editor content with only this control's text
                 self.editor.SetValue(text)
+            # Update live preview area with friendly live_content or a short fallback
+            live = control.get('live_content') or control.get('description') or ''
+            # If sample_html is present and the control is WXWebView, show the HTML as text
+            if control.get('id') == 'webview' and control.get('sample_html'):
+                # display the sample HTML source in preview; rendering requires wx.html2.WebView
+                live += "\n\n[HTML demo available — rendered in WebView if enabled]"
+            self.preview.SetValue(live)
 
     def on_save(self, event):
         # Save the current editor content to state; actual file write done by StateManager

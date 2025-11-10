@@ -5,6 +5,7 @@
     "name": "ActivityIndicator",
     "description": "Simple animated indicator that shows background activity.",
     "expectations": "Role: Status / Indicator\nKeyboard: Focusable if interactive; Tab/Shift+Tab must move focus out of it without trapping.\nScreen reader: Should announce presence and state if relevant (e.g., busy/idle).",
+    "live_content": "What this is: A small indicator that shows the application is busy (like a spinner).\nHow to use it: Focus it to check whether the app is working in the background.\nTip: Press Tab to move forward and Shift+Tab to go back; you should never get stuck here.",
     "tags": ["status", "media"]
   },
   {
@@ -12,6 +13,7 @@
     "name": "AnimationCtrl",
     "description": "Control that plays short animations (e.g., .ani files).",
     "expectations": "Role: Graphics / Animation\nKeyboard: Play/pause controls must be reachable via Tab and exit to next control with Shift+Tab. Do not trap focus.\nScreen reader: Provide accessible label and change notifications when play state changes.",
+    "live_content": "What this is: A small animation viewer for short clips or icons.\nHow to use it: Use the play/pause controls to start or stop the animation.\nTip: Use Tab to reach the play/pause buttons; make sure you can Tab away when finished.",
     "tags": ["media", "animation"]
   },
   {
@@ -19,6 +21,7 @@
     "name": "Button",
     "description": "Standard push button. Activatable with Space or Enter; should announce its label and activation state.",
     "expectations": "Role: Button\nKeyboard: Space/Enter to activate; Tab/Shift+Tab must move focus away normally.\nScreen reader: Announces label and 'pressed' feedback where appropriate.",
+    "live_content": "What this is: A clickable control that performs an action when pressed.\nHow to use it: Press Space or Enter when the button has focus to activate it.\nTip: Screen readers will announce the button label; after pressing, verify the app reports success.",
     "tags": ["basic", "action"]
   },
   {
@@ -26,6 +29,7 @@
     "name": "CheckListBox",
     "description": "List with a checkbox per item used for multiple selections.",
     "expectations": "Role: List with checkboxes\nKeyboard: Arrow keys to move, Space to toggle a checkbox, Tab/Shift+Tab to leave the control (no trapping).\nScreen reader: Announces item and checked state.",
+    "live_content": "What this is: A list where each item has a checkbox you can turn on or off.\nHow to use it: Move with the arrow keys and press Space to check or uncheck an item.\nTip: After changing a checkbox, Tab away to continue testing other parts of the app.",
     "tags": ["lists", "input"]
   },
   {
@@ -33,6 +37,7 @@
     "name": "Choice",
     "description": "Non-editable dropdown list for selecting a single item.",
     "expectations": "Role: Listbox / ComboBox (collapsed)\nKeyboard: Alt+Down to open, Arrow keys to navigate, Enter to select; Tab/Shift+Tab leaves control.\nScreen reader: Announces collapsed/expanded and selection.",
+    "live_content": "What this is: A simple dropdown where you pick one item from a list.\nHow to use it: Press Alt+Down or click the control to open the list, use arrows to choose, then press Enter.\nTip: Use Tab to move to the next field when done.",
     "tags": ["input", "dropdown"]
   },
   {
@@ -40,6 +45,7 @@
     "name": "Choicebook",
     "description": "A book control where page selection is controlled by a Choice control.",
     "expectations": "Role: Page List / Tab-like\nKeyboard: Tab to move to the Choice control, Arrow keys or Alt+Down to select a page; Tab/Shift+Tab must move focus out of the choicebook pages without trapping.\nScreen reader: Announces current page and its role.",
+    "live_content": "What this is: A simple page viewer where you pick a page from a dropdown.\nHow to use it: Choose a page and read the content on the right.\nTip: After viewing a page, press Tab to move on.",
     "tags": ["container", "navigation"]
   },
   {
@@ -47,6 +53,7 @@
     "name": "CommandLinkButton",
     "description": "A button with a main label and a descriptive sublabel (Windows-style command link).",
     "expectations": "Role: Button\nKeyboard: Space/Enter to activate; Tab/Shift+Tab normal traversal.\nScreen reader: Announces both main label and descriptive text.",
+    "live_content": "What this is: A button with extra context underneath the main label to explain what it does.\nHow to use it: Focus it and press Space or Enter to perform the action.\nTip: The extra text helps decide whether to press the button.",
     "tags": ["basic", "action", "windows"]
   },
   {
@@ -54,6 +61,7 @@
     "name": "ComboBox",
     "description": "Editable dropdown where users can type or select existing items.",
     "expectations": "Role: ComboBox\nKeyboard: Type to filter, Alt+Down to open; Tab/Shift+Tab leaves control.\nScreen reader: Announces value and editable state.",
+    "live_content": "What this is: A dropdown you can type into or pick an option from.\nHow to use it: Type to narrow choices or open the menu to pick one.\nTip: After typing, press Tab to move to the next control.",
     "tags": ["input", "dropdown"]
   },
   {
@@ -61,6 +69,7 @@
     "name": "EditableListBox",
     "description": "Compound control (list plus New/Edit/Delete) that allows editing of list items.",
     "expectations": "Role: Composite control\nKeyboard: Tab into the control and between its internal buttons and list; Shift+Tab must exit to previous control and not get trapped.\nScreen reader: Announce list items and button purposes; when editing, announce edit dialog state.",
+    "live_content": "What this is: A list you can change by adding, editing, or removing items.\nHow to use it: Use the New/Edit/Delete buttons to change entries; move between the list and buttons with Tab.\nTip: After editing, Tab away to continue testing keyboard flow.",
     "tags": ["lists", "composite"]
   },
   {
@@ -68,6 +77,7 @@
     "name": "FileCtrl",
     "description": "A file chooser control providing directory and file navigation UI.",
     "expectations": "Role: File chooser / Composite\nKeyboard: All interactive parts (tree, list, filename entry, buttons) must be reachable and focusable with Tab and Shift+Tab; ensure no focus trapping when entering nested panes.\nScreen reader: Announce current directory, selected file, and control hints.",
+    "live_content": "What this is: A file picker you can use to choose folders and files.\nHow to use it: Navigate folders, select a file, and confirm.\nTip: Use Tab to reach the filename field and action buttons; make sure you can leave the control smoothly.",
     "tags": ["input", "file"]
   },
   {
@@ -75,6 +85,7 @@
     "name": "Grid",
     "description": "Spreadsheet-like grid for tabular data; cells can be selected and edited.",
     "expectations": "Role: Grid / Table\nKeyboard: Arrow keys to move between cells, Enter to edit, Tab/Shift+Tab to move out of the grid (or into next focusable cell depending on editing mode). Test both editing and navigation behavior for trapping.\nScreen reader: Announce row/column and cell value.",
+    "live_content": "What this is: A simple table where each cell holds a piece of data.\nHow to use it: Move with arrows and edit cells with Enter when allowed.\nTip: After editing, press Tab to move to the next field or Shift+Tab to go back.",
     "tags": ["data", "table"]
   },
   {
@@ -82,6 +93,7 @@
     "name": "HtmlListBox",
     "description": "ListBox capable of rendering HTML fragments per item.",
     "expectations": "Role: List\nKeyboard: Arrow keys to move, Tab/Shift+Tab to move focus away.\nScreen reader: Ideally announces plain text fallback; if rendering HTML, ensure accessible name and role are exposed.",
+    "live_content": "What this is: A list that can show simple HTML inside each item for richer formatting.\nHow to use it: Navigate items with arrows; the content should still be understandable even without styling.\nTip: Ensure the accessible text matches the visible content.",
     "tags": ["lists", "rich"]
   },
   {
@@ -89,6 +101,7 @@
     "name": "ListBox",
     "description": "Single and multi-select lists for selecting items.",
     "expectations": "Role: List\nKeyboard: Arrow keys, Shift+arrow for range, Ctrl+Space to toggle in multi-select; Tab/Shift+Tab must leave the list without trapping.\nScreen reader: Announces item and position (e.g., '3 of 12').",
+    "live_content": "What this is: A list of choices you can pick from.\nHow to use it: Use arrow keys to move and Enter to activate (if applicable). For multi-select lists, use Ctrl+click or Ctrl+Space.\nTip: Check that you can Tab out of the list after making a selection.",
     "tags": ["lists", "navigation"]
   },
   {
@@ -96,6 +109,7 @@
     "name": "ListCtrl",
     "description": "Flexible list control with multiple view modes (report, icon, small icon, list).",
     "expectations": "Role: List/Table (report mode)\nKeyboard: Arrow keys to navigate items; in report mode, announce columns; Tab/Shift+Tab must move focus out of the control. Test focus behavior when switching view modes to avoid Replace(NULL) issues.\nScreen reader: Announces item, column headers, and position.",
+    "live_content": "What this is: A versatile list that can show columns or icons depending on the mode.\nHow to use it: Switch views to try different layouts and use arrows to move between items.\nTip: After changing views, try Tab to ensure focus moves away cleanly.",
     "tags": ["lists", "views"]
   },
   {
@@ -103,6 +117,7 @@
     "name": "ListCtrlViews",
     "description": "Helper view that switches a ListCtrl between Report/List/Icon/SmallIcon modes for testing.",
     "expectations": "Role: View switcher + List control\nKeyboard: Controls to switch modes should be reachable by Tab; ensure focus is preserved after mode changes and not trapped.\nScreen reader: Announces current view mode and item info.",
+    "live_content": "What this is: A small tool that lets you change how a list looks (columns, icons, etc.) to compare accessibility across views.\nHow to use it: Pick a view and explore the listed items.\nTip: Check keyboard flow after switching.",
     "tags": ["lists", "views"]
   },
   {
@@ -110,6 +125,7 @@
     "name": "MediaCtrl",
     "description": "Control to play audio/video content.",
     "expectations": "Role: Media Player\nKeyboard: Play/pause/seek controls must be keyboard accessible and allow exiting to surrounding controls with Tab/Shift+Tab; no trapping.\nScreen reader: Announce playback state, current time, and controls.",
+    "live_content": "What this is: A simple player for audio or video clips with basic controls.\nHow to use it: Use the play/pause buttons and volume controls as needed.\nTip: After pausing, press Tab to move to the next item—keyboard focus should move out normally.",
     "tags": ["media", "audio"]
   },
   {
@@ -117,6 +133,7 @@
     "name": "PropertyGrid",
     "description": "Grid of named properties allowing editing of different data types (strings, colors, fonts).",
     "expectations": "Role: Grid / Property editor\nKeyboard: Tab/Shift+Tab must move between properties and out of the grid; editing popups (color chooser, font dialog) must return focus to the grid and not trap keyboard.\nScreen reader: Announce property name, type, and current value. Be defensive when restoring complex types (fonts/colors).",
+    "live_content": "What this is: A list of named settings you can change, such as text, colors, or fonts.\nHow to use it: Select a property and edit its value; for colors or fonts, a chooser may appear.\nTip: After changing a value, Tab away to ensure focus returns correctly.",
     "tags": ["data", "editor"]
   },
   {
@@ -124,6 +141,7 @@
     "name": "RadioButton",
     "description": "Mutually-exclusive option control; often used in groups or RadioBox.",
     "expectations": "Role: Radio button\nKeyboard: Arrow keys to move within group, Tab/Shift+Tab to move out of group; ensure focus is not trapped inside a radio group.\nScreen reader: Announce group and position (e.g., '2 of 4').",
+    "live_content": "What this is: A set of options where only one can be chosen at a time.\nHow to use it: Use arrow keys to move between options and press Space to select.\nTip: Use Tab to leave the group after selecting an option.",
     "tags": ["input", "selection"]
   },
   {
@@ -131,6 +149,7 @@
     "name": "RearrangeCtrl",
     "description": "AGW control for reordering a list of items with Up/Down and Add/Remove buttons.",
     "expectations": "Role: Composite reordering control\nKeyboard: All internal buttons and list must be reachable and leaveable via Tab/Shift+Tab; ensure operations update accessible name/position. If AGW unavailable, a shim must provide equivalent keyboard behavior.",
+    "live_content": "What this is: A helper that lets you move items up or down in a list.\nHow to use it: Select an item and use the Up/Down buttons to change its order.\nTip: After moving items, verify the screen reader announces the new order and you can Tab out normally.",
     "tags": ["lists", "composite"]
   },
   {
@@ -138,6 +157,7 @@
     "name": "RichTextCtrl",
     "description": "Rich text editor supporting formatting, hyperlinks, and complex content.",
     "expectations": "Role: Rich edit / Document\nKeyboard: Standard editing keys; Tab/Shift+Tab may be used for UI commands—ensure a clear focus path to exit editing mode so Tab doesn't get trapped.\nScreen reader: Announce document structure and formatting where possible.",
+    "live_content": "What this is: A text editor with formatting like bold or links.\nHow to use it: Type and use formatting tools to change text appearance.\nTip: If Tab is used for commands, confirm there's a way to return focus to the main interface.",
     "tags": ["editor", "rich"]
   },
   {
@@ -145,6 +165,7 @@
     "name": "SplitterWindow",
     "description": "Window split into two panes with a draggable sash, used to host two independent controls.",
     "expectations": "Role: Container with split panes\nKeyboard: Sash should be keyboard-manipulable if interactive; Tab/Shift+Tab must move focus into and out of panes predictably without trapping.\nScreen reader: Announce pane boundaries and focus changes.",
+    "live_content": "What this is: A window divided into two areas so you can see different content at once.\nHow to use it: Move focus into each pane and try interactions; the sash may be moved with mouse or keyboard.\nTip: After using a pane, press Tab to move to the next control.",
     "tags": ["container", "layout"]
   },
   {
@@ -152,6 +173,7 @@
     "name": "Toolbook",
     "description": "Book control navigated via a toolbar of tools (icons) to switch pages.",
     "expectations": "Role: Page container\nKeyboard: Tool buttons must be reachable by Tab and switch pages via Enter/Space; Tab/Shift+Tab must exit pages and not trap focus.\nScreen reader: Announce page titles and selected state.",
+    "live_content": "What this is: A set of pages you can switch between using a toolbar of icons.\nHow to use it: Focus a tool and press Enter or Space to open its page.\nTip: Use Tab to continue to the content on the selected page.",
     "tags": ["container", "navigation"]
   },
   {
@@ -159,6 +181,7 @@
     "name": "ToolBar",
     "description": "Toolbar containing tool buttons and controls for quick actions.",
     "expectations": "Role: Toolbar\nKeyboard: Tools must be navigable via Tab and arrow keys where appropriate; no focus trapping; screen readers should announce tooltips and enabled state.",
+    "live_content": "What this is: A row of buttons for common actions like Save or Undo.\nHow to use it: Move to a button and press Enter or Space to activate it.\nTip: Make sure you can move past the toolbar with Tab when finished.",
     "tags": ["action", "navigation"]
   },
   {
@@ -166,6 +189,7 @@
     "name": "Treebook",
     "description": "Book control navigated via a TreeCtrl to choose pages.",
     "expectations": "Role: Page container with tree navigation\nKeyboard: Tree navigation must allow focus out with Tab/Shift+Tab; ensure selecting a tree node doesn't trap keyboard.\nScreen reader: Announce tree node and selected page.",
+    "live_content": "What this is: A set of pages you pick using a tree on the left side.\nHow to use it: Use arrows to move in the tree and Enter to open a page.\nTip: After opening a page, press Tab to move into the page content.",
     "tags": ["container", "navigation"]
   },
   {
@@ -173,6 +197,7 @@
     "name": "TreeCtrl",
     "description": "Hierarchical tree control for nested items and expand/collapse functionality.",
     "expectations": "Role: Tree\nKeyboard: Left/Right to collapse/expand, Arrow keys to navigate, Tab/Shift+Tab to leave the control. Report any focus trapping as a bug.\nScreen reader: Announce hierarchy and expanded/collapsed state.",
+    "live_content": "What this is: A list of items where some items have child items you can open or close.\nHow to use it: Use Left/Right to close/open and arrows to move; press Enter to select.\nTip: Ensure Tab moves you out when you want to continue.",
     "tags": ["hierarchy", "navigation"]
   },
   {
@@ -180,6 +205,7 @@
     "name": "TextCtrl",
     "description": "Single-line and multi-line text entry controls for free text input.",
     "expectations": "Role: Edit / Text\nKeyboard: Arrow keys, Home/End, Ctrl+A for select all; Tab/Shift+Tab must move focus out when not in multi-line editing mode; in multi-line mode verify whether Tab inserts a tab character or moves focus based on design.\nScreen reader: Announce role and current text.",
+    "live_content": "What this is: A field where you can type text, either one line or many.\nHow to use it: Type your text; use standard keyboard shortcuts for navigation and selection.\nTip: If Tab inserts a tab character, there should still be a way to leave editing mode to continue testing.",
     "tags": ["input", "basic"]
   },
   {
@@ -187,6 +213,8 @@
     "name": "WXWebView",
     "description": "Embedded web view (wx.html2.WebView) for rendering HTML content and web pages.",
     "expectations": "Role: Embedded web content\nKeyboard: Web content may manage its own focus; ensure Tab/Shift+Tab can move the focus into and back out of the web view. If focus becomes trapped inside web content, report as integration bug and provide a programmatic way to exit (e.g., Escape to return focus).\nScreen reader: Web content should expose accessible names/roles via the embedded engine (e.g., MSHTML/Chromium); test with screen reader to verify announcements.",
+    "live_content": "What this is: A small web page embedded inside the app so you can test how web content behaves with keyboard and screen readers.\nHow to use it: Focus the web area and try Tab and Shift+Tab to enter and leave interactive elements.\nTip: If the web content traps focus, press Escape (if supported) or report the issue so we can provide a keyboard escape.",
+    "sample_html": "<html><body><h1>Welcome to WXWebView demo</h1><p>This is a short, accessible demo page. Use Tab to move between links and interactive elements.</p><a href='#'>Sample link</a> <button>Sample button</button></body></html>",
     "tags": ["web", "media"]
   }
 ]
