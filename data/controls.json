@@ -1,37 +1,192 @@
+
 [
+  {
+    "id": "activityindicator",
+    "name": "ActivityIndicator",
+    "description": "Simple animated indicator that shows background activity.",
+    "expectations": "Role: Status / Indicator\nKeyboard: Focusable if interactive; Tab/Shift+Tab must move focus out of it without trapping.\nScreen reader: Should announce presence and state if relevant (e.g., busy/idle).",
+    "tags": ["status", "media"]
+  },
+  {
+    "id": "animationctrl",
+    "name": "AnimationCtrl",
+    "description": "Control that plays short animations (e.g., .ani files).",
+    "expectations": "Role: Graphics / Animation\nKeyboard: Play/pause controls must be reachable via Tab and exit to next control with Shift+Tab. Do not trap focus.\nScreen reader: Provide accessible label and change notifications when play state changes.",
+    "tags": ["media", "animation"]
+  },
   {
     "id": "button",
     "name": "Button",
-    "description": "Standard push button. Should be activatable with Space or Enter and announce its label.",
-    "expectations": "Role: Button\nKeyboard: Space/Enter to activate\nScreen reader: announces label and pressed state",
+    "description": "Standard push button. Activatable with Space or Enter; should announce its label and activation state.",
+    "expectations": "Role: Button\nKeyboard: Space/Enter to activate; Tab/Shift+Tab must move focus away normally.\nScreen reader: Announces label and 'pressed' feedback where appropriate.",
     "tags": ["basic", "action"]
   },
   {
-    "id": "textctrl",
-    "name": "TextCtrl",
-    "description": "Single-line and multi-line text inputs. Editable text should expose caret position and value.",
-    "expectations": "Role: Text / Edit\nKeyboard: Arrow keys, Home/End, Ctrl+A\nScreen reader: announces role and current text",
-    "tags": ["basic", "input"]
+    "id": "checklistbox",
+    "name": "CheckListBox",
+    "description": "List with a checkbox per item used for multiple selections.",
+    "expectations": "Role: List with checkboxes\nKeyboard: Arrow keys to move, Space to toggle a checkbox, Tab/Shift+Tab to leave the control (no trapping).\nScreen reader: Announces item and checked state.",
+    "tags": ["lists", "input"]
   },
   {
-    "id": "listbox",
-    "name": "ListBox",
-    "description": "Single and multi-select lists used for selecting items. Should support keyboard selection and range selection.",
-    "expectations": "Role: List\nKeyboard: Arrow keys, Shift+arrow for range, Ctrl+Space to toggle in multi-select\nScreen reader: announces item text and position",
-    "tags": ["lists", "navigation"]
+    "id": "choice",
+    "name": "Choice",
+    "description": "Non-editable dropdown list for selecting a single item.",
+    "expectations": "Role: Listbox / ComboBox (collapsed)\nKeyboard: Alt+Down to open, Arrow keys to navigate, Enter to select; Tab/Shift+Tab leaves control.\nScreen reader: Announces collapsed/expanded and selection.",
+    "tags": ["input", "dropdown"]
   },
   {
-    "id": "treectrl",
-    "name": "TreeCtrl",
-    "description": "Hierarchical tree control for nested items. Expand/collapse with keyboard and announce parent/child relationships.",
-    "expectations": "Role: Tree\nKeyboard: Left/Right to collapse/expand, Arrow keys to navigate\nScreen reader: announces hierarchy and expanded/collapsed state",
-    "tags": ["hierarchy", "navigation"]
+    "id": "choicebook",
+    "name": "Choicebook",
+    "description": "A book control where page selection is controlled by a Choice control.",
+    "expectations": "Role: Page List / Tab-like\nKeyboard: Tab to move to the Choice control, Arrow keys or Alt+Down to select a page; Tab/Shift+Tab must move focus out of the choicebook pages without trapping.\nScreen reader: Announces current page and its role.",
+    "tags": ["container", "navigation"]
+  },
+  {
+    "id": "commandlinkbutton",
+    "name": "CommandLinkButton",
+    "description": "A button with a main label and a descriptive sublabel (Windows-style command link).",
+    "expectations": "Role: Button\nKeyboard: Space/Enter to activate; Tab/Shift+Tab normal traversal.\nScreen reader: Announces both main label and descriptive text.",
+    "tags": ["basic", "action", "windows"]
+  },
+  {
+    "id": "combox",
+    "name": "ComboBox",
+    "description": "Editable dropdown where users can type or select existing items.",
+    "expectations": "Role: ComboBox\nKeyboard: Type to filter, Alt+Down to open; Tab/Shift+Tab leaves control.\nScreen reader: Announces value and editable state.",
+    "tags": ["input", "dropdown"]
+  },
+  {
+    "id": "editablelistbox",
+    "name": "EditableListBox",
+    "description": "Compound control (list plus New/Edit/Delete) that allows editing of list items.",
+    "expectations": "Role: Composite control\nKeyboard: Tab into the control and between its internal buttons and list; Shift+Tab must exit to previous control and not get trapped.\nScreen reader: Announce list items and button purposes; when editing, announce edit dialog state.",
+    "tags": ["lists", "composite"]
+  },
+  {
+    "id": "filectrl",
+    "name": "FileCtrl",
+    "description": "A file chooser control providing directory and file navigation UI.",
+    "expectations": "Role: File chooser / Composite\nKeyboard: All interactive parts (tree, list, filename entry, buttons) must be reachable and focusable with Tab and Shift+Tab; ensure no focus trapping when entering nested panes.\nScreen reader: Announce current directory, selected file, and control hints.",
+    "tags": ["input", "file"]
   },
   {
     "id": "grid",
     "name": "Grid",
-    "description": "Spreadsheet-like grid for tabular data. Cells should be addressable and editable with clear row/column labels.",
-    "expectations": "Role: Grid/Table\nKeyboard: Arrow keys to move between cells, Enter to edit\nScreen reader: announces cell coordinates and value",
+    "description": "Spreadsheet-like grid for tabular data; cells can be selected and edited.",
+    "expectations": "Role: Grid / Table\nKeyboard: Arrow keys to move between cells, Enter to edit, Tab/Shift+Tab to move out of the grid (or into next focusable cell depending on editing mode). Test both editing and navigation behavior for trapping.\nScreen reader: Announce row/column and cell value.",
     "tags": ["data", "table"]
+  },
+  {
+    "id": "htmlistbox",
+    "name": "HtmlListBox",
+    "description": "ListBox capable of rendering HTML fragments per item.",
+    "expectations": "Role: List\nKeyboard: Arrow keys to move, Tab/Shift+Tab to move focus away.\nScreen reader: Ideally announces plain text fallback; if rendering HTML, ensure accessible name and role are exposed.",
+    "tags": ["lists", "rich"]
+  },
+  {
+    "id": "listbox",
+    "name": "ListBox",
+    "description": "Single and multi-select lists for selecting items.",
+    "expectations": "Role: List\nKeyboard: Arrow keys, Shift+arrow for range, Ctrl+Space to toggle in multi-select; Tab/Shift+Tab must leave the list without trapping.\nScreen reader: Announces item and position (e.g., '3 of 12').",
+    "tags": ["lists", "navigation"]
+  },
+  {
+    "id": "listctrl",
+    "name": "ListCtrl",
+    "description": "Flexible list control with multiple view modes (report, icon, small icon, list).",
+    "expectations": "Role: List/Table (report mode)\nKeyboard: Arrow keys to navigate items; in report mode, announce columns; Tab/Shift+Tab must move focus out of the control. Test focus behavior when switching view modes to avoid Replace(NULL) issues.\nScreen reader: Announces item, column headers, and position.",
+    "tags": ["lists", "views"]
+  },
+  {
+    "id": "listctrlviews",
+    "name": "ListCtrlViews",
+    "description": "Helper view that switches a ListCtrl between Report/List/Icon/SmallIcon modes for testing.",
+    "expectations": "Role: View switcher + List control\nKeyboard: Controls to switch modes should be reachable by Tab; ensure focus is preserved after mode changes and not trapped.\nScreen reader: Announces current view mode and item info.",
+    "tags": ["lists", "views"]
+  },
+  {
+    "id": "mediactrl",
+    "name": "MediaCtrl",
+    "description": "Control to play audio/video content.",
+    "expectations": "Role: Media Player\nKeyboard: Play/pause/seek controls must be keyboard accessible and allow exiting to surrounding controls with Tab/Shift+Tab; no trapping.\nScreen reader: Announce playback state, current time, and controls.",
+    "tags": ["media", "audio"]
+  },
+  {
+    "id": "propertygrid",
+    "name": "PropertyGrid",
+    "description": "Grid of named properties allowing editing of different data types (strings, colors, fonts).",
+    "expectations": "Role: Grid / Property editor\nKeyboard: Tab/Shift+Tab must move between properties and out of the grid; editing popups (color chooser, font dialog) must return focus to the grid and not trap keyboard.\nScreen reader: Announce property name, type, and current value. Be defensive when restoring complex types (fonts/colors).",
+    "tags": ["data", "editor"]
+  },
+  {
+    "id": "radiobutton",
+    "name": "RadioButton",
+    "description": "Mutually-exclusive option control; often used in groups or RadioBox.",
+    "expectations": "Role: Radio button\nKeyboard: Arrow keys to move within group, Tab/Shift+Tab to move out of group; ensure focus is not trapped inside a radio group.\nScreen reader: Announce group and position (e.g., '2 of 4').",
+    "tags": ["input", "selection"]
+  },
+  {
+    "id": "rearrangectrl",
+    "name": "RearrangeCtrl",
+    "description": "AGW control for reordering a list of items with Up/Down and Add/Remove buttons.",
+    "expectations": "Role: Composite reordering control\nKeyboard: All internal buttons and list must be reachable and leaveable via Tab/Shift+Tab; ensure operations update accessible name/position. If AGW unavailable, a shim must provide equivalent keyboard behavior.",
+    "tags": ["lists", "composite"]
+  },
+  {
+    "id": "richtextctrl",
+    "name": "RichTextCtrl",
+    "description": "Rich text editor supporting formatting, hyperlinks, and complex content.",
+    "expectations": "Role: Rich edit / Document\nKeyboard: Standard editing keys; Tab/Shift+Tab may be used for UI commands—ensure a clear focus path to exit editing mode so Tab doesn't get trapped.\nScreen reader: Announce document structure and formatting where possible.",
+    "tags": ["editor", "rich"]
+  },
+  {
+    "id": "splitterwindow",
+    "name": "SplitterWindow",
+    "description": "Window split into two panes with a draggable sash, used to host two independent controls.",
+    "expectations": "Role: Container with split panes\nKeyboard: Sash should be keyboard-manipulable if interactive; Tab/Shift+Tab must move focus into and out of panes predictably without trapping.\nScreen reader: Announce pane boundaries and focus changes.",
+    "tags": ["container", "layout"]
+  },
+  {
+    "id": "toolbook",
+    "name": "Toolbook",
+    "description": "Book control navigated via a toolbar of tools (icons) to switch pages.",
+    "expectations": "Role: Page container\nKeyboard: Tool buttons must be reachable by Tab and switch pages via Enter/Space; Tab/Shift+Tab must exit pages and not trap focus.\nScreen reader: Announce page titles and selected state.",
+    "tags": ["container", "navigation"]
+  },
+  {
+    "id": "toolbar",
+    "name": "ToolBar",
+    "description": "Toolbar containing tool buttons and controls for quick actions.",
+    "expectations": "Role: Toolbar\nKeyboard: Tools must be navigable via Tab and arrow keys where appropriate; no focus trapping; screen readers should announce tooltips and enabled state.",
+    "tags": ["action", "navigation"]
+  },
+  {
+    "id": "treebook",
+    "name": "Treebook",
+    "description": "Book control navigated via a TreeCtrl to choose pages.",
+    "expectations": "Role: Page container with tree navigation\nKeyboard: Tree navigation must allow focus out with Tab/Shift+Tab; ensure selecting a tree node doesn't trap keyboard.\nScreen reader: Announce tree node and selected page.",
+    "tags": ["container", "navigation"]
+  },
+  {
+    "id": "treectrl",
+    "name": "TreeCtrl",
+    "description": "Hierarchical tree control for nested items and expand/collapse functionality.",
+    "expectations": "Role: Tree\nKeyboard: Left/Right to collapse/expand, Arrow keys to navigate, Tab/Shift+Tab to leave the control. Report any focus trapping as a bug.\nScreen reader: Announce hierarchy and expanded/collapsed state.",
+    "tags": ["hierarchy", "navigation"]
+  },
+  {
+    "id": "textctrl",
+    "name": "TextCtrl",
+    "description": "Single-line and multi-line text entry controls for free text input.",
+    "expectations": "Role: Edit / Text\nKeyboard: Arrow keys, Home/End, Ctrl+A for select all; Tab/Shift+Tab must move focus out when not in multi-line editing mode; in multi-line mode verify whether Tab inserts a tab character or moves focus based on design.\nScreen reader: Announce role and current text.",
+    "tags": ["input", "basic"]
+  },
+  {
+    "id": "webview",
+    "name": "WXWebView",
+    "description": "Embedded web view (wx.html2.WebView) for rendering HTML content and web pages.",
+    "expectations": "Role: Embedded web content\nKeyboard: Web content may manage its own focus; ensure Tab/Shift+Tab can move the focus into and back out of the web view. If focus becomes trapped inside web content, report as integration bug and provide a programmatic way to exit (e.g., Escape to return focus).\nScreen reader: Web content should expose accessible names/roles via the embedded engine (e.g., MSHTML/Chromium); test with screen reader to verify announcements.",
+    "tags": ["web", "media"]
   }
 ]
