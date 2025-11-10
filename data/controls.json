@@ -1,0 +1,37 @@
+[
+  {
+    "id": "button",
+    "name": "Button",
+    "description": "Standard push button. Should be activatable with Space or Enter and announce its label.",
+    "expectations": "Role: Button\nKeyboard: Space/Enter to activate\nScreen reader: announces label and pressed state",
+    "tags": ["basic", "action"]
+  },
+  {
+    "id": "textctrl",
+    "name": "TextCtrl",
+    "description": "Single-line and multi-line text inputs. Editable text should expose caret position and value.",
+    "expectations": "Role: Text / Edit\nKeyboard: Arrow keys, Home/End, Ctrl+A\nScreen reader: announces role and current text",
+    "tags": ["basic", "input"]
+  },
+  {
+    "id": "listbox",
+    "name": "ListBox",
+    "description": "Single and multi-select lists used for selecting items. Should support keyboard selection and range selection.",
+    "expectations": "Role: List\nKeyboard: Arrow keys, Shift+arrow for range, Ctrl+Space to toggle in multi-select\nScreen reader: announces item text and position",
+    "tags": ["lists", "navigation"]
+  },
+  {
+    "id": "treectrl",
+    "name": "TreeCtrl",
+    "description": "Hierarchical tree control for nested items. Expand/collapse with keyboard and announce parent/child relationships.",
+    "expectations": "Role: Tree\nKeyboard: Left/Right to collapse/expand, Arrow keys to navigate\nScreen reader: announces hierarchy and expanded/collapsed state",
+    "tags": ["hierarchy", "navigation"]
+  },
+  {
+    "id": "grid",
+    "name": "Grid",
+    "description": "Spreadsheet-like grid for tabular data. Cells should be addressable and editable with clear row/column labels.",
+    "expectations": "Role: Grid/Table\nKeyboard: Arrow keys to move between cells, Enter to edit\nScreen reader: announces cell coordinates and value",
+    "tags": ["data", "table"]
+  }
+]

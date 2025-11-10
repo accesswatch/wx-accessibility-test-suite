@@ -36,6 +36,7 @@ from tabs.advanced_media_tab import AdvancedMediaTab
 from tabs.advanced_controls3_tab import AdvancedControls3Tab
 from tabs.advanced_controls4_tab import AdvancedControls4Tab
 from tabs.advanced_controls5_tab import AdvancedControls5Tab
+from tabs.control_browser_tab import ControlBrowserTab
 
 from state_manager import StateManager
 
@@ -178,6 +179,7 @@ class AccessibilityTestFrame(wx.Frame):
         self.tabs.append(AdvancedControls3Tab(self.notebook, self))
         self.tabs.append(AdvancedControls4Tab(self.notebook, self))
         self.tabs.append(AdvancedControls5Tab(self.notebook, self))
+        self.tabs.append(ControlBrowserTab(self.notebook, self))
         self.tabs.append(ValidationTab(self.notebook, self))
         
         # Add tabs to notebook
