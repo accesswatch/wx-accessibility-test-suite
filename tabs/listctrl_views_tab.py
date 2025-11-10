@@ -266,10 +266,27 @@ class ListCtrlViewsTab(wx.Panel, TabStateHelper):
         # (wxPython requires recreating to change view style)
         parent = self.list_ctrl.GetParent()
         sizer = self.list_ctrl.GetContainingSizer()
-        pos = sizer.GetItem(self.list_ctrl)
-        
-        self.list_ctrl.Destroy()
-        
+        # Capture the sizer item for the current control so we can re-insert
+        # the new control in the same location. Do this before destroying
+        # the old control because GetItem(...).GetWindow() may return None
+        # after the window is destroyed on some platforms/versions.
+        pos_item = sizer.GetItem(self.list_ctrl) if sizer is not None else None
+        # Determine index of the current sizer item (if available)
+        insert_index = None
+        if pos_item is not None:
+            try:
+                children = sizer.GetChildren()
+                insert_index = children.index(pos_item)
+            except Exception:
+                insert_index = None
+
+        # Destroy the old control and create the new one
+        try:
+            self.list_ctrl.Destroy()
+        except Exception:
+            # If Destroy fails for some reason, continue and create new control
+            pass
+
         self.list_ctrl = wx.ListCtrl(parent, style=style | wx.BORDER_SUNKEN)
         self.list_ctrl.SetImageList(self.image_list, wx.IMAGE_LIST_NORMAL)
         self.list_ctrl.SetImageList(self.image_list, wx.IMAGE_LIST_SMALL)
@@ -290,8 +307,26 @@ class ListCtrlViewsTab(wx.Panel, TabStateHelper):
         elif view_name == "SmallIcon":
             self._setup_small_icon_view()
             
-        # Replace in sizer
-        sizer.Replace(pos.GetWindow(), self.list_ctrl)
+        # Insert the new control into the sizer at the same index if known.
+        # Using Insert avoids calling Replace(oldwin, newwin) which may fail
+        # if the sizer's stored window pointer is NULL. Fall back to Add().
+        try:
+            if insert_index is not None:
+                sizer.Insert(insert_index, self.list_ctrl, 1, wx.ALL | wx.EXPAND, 10)
+            else:
+                sizer.Add(self.list_ctrl, 1, wx.ALL | wx.EXPAND, 10)
+        except Exception:
+            # As a last resort, try Replace using the saved pos_item window
+            try:
+                oldwin = pos_item.GetWindow() if pos_item is not None else None
+                if oldwin:
+                    sizer.Replace(oldwin, self.list_ctrl)
+                else:
+                    sizer.Add(self.list_ctrl, 1, wx.ALL | wx.EXPAND, 10)
+            except Exception:
+                # Give up gracefully; sizer may be in a transient state
+                pass
+
         sizer.Layout()
         
         # Update status

@@ -740,14 +740,34 @@ class AdvancedMediaTab(wx.Panel, TabStateHelper):
         if "properties" in state:
             for name, value in state["properties"].items():
                 prop = self.propgrid.GetProperty(name)
-                if prop:
-                    try:
-                        # PropertyGrid handles type conversion internally
-                        prop.SetValue(value)
-                    except (ValueError, TypeError, AttributeError):
-                        # Skip properties that fail to restore
-                        # (e.g., invalid color strings, out of range ints)
-                        pass
+                if not prop:
+                    continue
+
+                # Be defensive when restoring property values. Some property
+                # types (e.g. FontProperty) expect complex wx objects and
+                # attempting to SetValue() with a string (from older saves)
+                # can trigger C++ assertions in the propgrid layer. To avoid
+                # noisy assertion logs or crashes, detect properties whose
+                # current value is a complex wx type and skip restoring from
+                # plain strings.
+                try:
+                    cur_val = prop.GetValue()
+                except Exception:
+                    cur_val = None
+
+                # If the property's current type is wx.Font and the saved
+                # representation is a plain string, skip restoring it.
+                if isinstance(cur_val, wx.Font) and isinstance(value, str):
+                    continue
+
+                # Otherwise try to set the value and catch any error. Use a
+                # broad except to guard against underlying C++ assertion
+                # conversions that raise non-ValueError exceptions.
+                try:
+                    prop.SetValue(value)
+                except Exception:
+                    # Skip properties that fail to restore
+                    continue
                         
         # Restore volume (affects both slider and media control)
         if "volume" in state:
