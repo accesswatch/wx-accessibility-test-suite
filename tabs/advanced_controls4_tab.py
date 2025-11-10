@@ -5,6 +5,7 @@ ActivityIndicator, and specialized list controls.
 """
 
 import wx
+import wx.adv
 import wx.lib.agw.flatnotebook as fnb
 from state_manager import TabStateHelper
 
@@ -257,7 +258,7 @@ class AdvancedControls4Tab(wx.Panel, TabStateHelper):
         editable_sizer = wx.BoxSizer(wx.VERTICAL)
         editable_sizer.Add(wx.StaticText(editable_panel, label="EditableListBox:"), 0, wx.ALL, 5)
         
-        self.editable_list = wx.EditableListBox(
+        self.editable_list = wx.adv.EditableListBox(
             editable_panel,
             label="Items (New/Edit/Delete buttons)",
             size=(300, 200)
