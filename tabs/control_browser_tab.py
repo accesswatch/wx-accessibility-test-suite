@@ -12,6 +12,14 @@ import json
 from pathlib import Path
 from state_manager import TabStateHelper
 
+# Try to import the html2 WebView. If unavailable, we'll gracefully fall back
+# to a read-only text preview that shows the sample HTML source or friendly
+# live content. This keeps the UI functional on systems without html2.
+try:
+    from wx.html2 import WebView
+except Exception:
+    WebView = None
+
 
 class ControlBrowserTab(wx.Panel, TabStateHelper):
     """A tab that lists available controls and shows/edit descriptions.
@@ -26,6 +34,10 @@ class ControlBrowserTab(wx.Panel, TabStateHelper):
         super().__init__(parent)
         self.main_frame = main_frame
         self.tab_name = "Control Browser"
+
+        # Whether we can render HTML using wx.html2.WebView
+        self.have_webview = WebView is not None
+        self.webview = None
 
         # Load controls data
         self.controls_path = Path("data") / "controls.json"
@@ -74,12 +86,27 @@ class ControlBrowserTab(wx.Panel, TabStateHelper):
         self.editor.SetToolTip("Edit descriptions and expectations. Press Save to persist.")
         box_sizer.Add(self.editor, 1, wx.EXPAND | wx.ALL, 6)
 
-        # Live preview area beneath the editor
+        # Live preview area beneath the editor. We create two possible
+        # presentation targets: a read-only text preview (`self.preview_text`)
+        # and a container panel `self.preview_container` that may host a
+        # `wx.html2.WebView` instance when available.
         preview_box = wx.StaticBox(self, label="Live Preview")
         preview_sizer = wx.StaticBoxSizer(preview_box, wx.VERTICAL)
-        self.preview = wx.TextCtrl(self, style=wx.TE_MULTILINE | wx.TE_READONLY)
-        self.preview.SetMinSize((400, 120))
-        preview_sizer.Add(self.preview, 1, wx.EXPAND | wx.ALL, 6)
+
+        # Read-only text fallback
+        self.preview_text = wx.TextCtrl(self, style=wx.TE_MULTILINE | wx.TE_READONLY)
+        self.preview_text.SetMinSize((400, 120))
+
+        # Container for a possible WebView instance
+        self.preview_container = wx.Panel(self)
+        self.preview_container.SetMinSize((400, 120))
+        self.webview_panel_sizer = wx.BoxSizer(wx.VERTICAL)
+        self.preview_container.SetSizer(self.webview_panel_sizer)
+
+        # By default show the text preview; the WebView (if created) will
+        # be shown/hidden dynamically in `on_select`.
+        preview_sizer.Add(self.preview_text, 1, wx.EXPAND | wx.ALL, 6)
+        preview_sizer.Add(self.preview_container, 1, wx.EXPAND | wx.ALL, 6)
         box_sizer.Add(preview_sizer, 0, wx.EXPAND | wx.ALL, 0)
 
         btn_sizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -154,11 +181,73 @@ class ControlBrowserTab(wx.Panel, TabStateHelper):
                 self.editor.SetValue(text)
             # Update live preview area with friendly live_content or a short fallback
             live = control.get('live_content') or control.get('description') or ''
-            # If sample_html is present and the control is WXWebView, show the HTML as text
-            if control.get('id') == 'webview' and control.get('sample_html'):
-                # display the sample HTML source in preview; rendering requires wx.html2.WebView
-                live += "\n\n[HTML demo available — rendered in WebView if enabled]"
-            self.preview.SetValue(live)
+
+            # If the control has a sample_html and we have a WebView available,
+            # render it. Otherwise show the friendly live content or the HTML
+            # source as text (so the user can still inspect it).
+            sample_html = control.get('sample_html')
+            if sample_html and self.have_webview and control.get('id') == 'webview':
+                # Hide the text preview
+                try:
+                    self.preview_text.Hide()
+                except Exception:
+                    pass
+
+                # Create WebView lazily (avoid import-time GUI creation)
+                if not self.webview:
+                    try:
+                        if hasattr(WebView, 'New'):
+                            self.webview = WebView.New(self.preview_container)
+                        else:
+                            self.webview = WebView(self.preview_container)
+                        self.webview_panel_sizer.Add(self.webview, 1, wx.EXPAND)
+                        self.preview_container.Layout()
+                    except Exception:
+                        # If WebView creation fails for any reason, fall back
+                        # to showing the text preview with a helpful note.
+                        self.webview = None
+
+                if self.webview:
+                    try:
+                        # Try common APIs in order to be compatible across
+                        # wx versions: prefer LoadHTML, then SetPage.
+                        if hasattr(self.webview, 'LoadHTML'):
+                            self.webview.LoadHTML(sample_html)
+                        elif hasattr(self.webview, 'SetPage'):
+                            self.webview.SetPage(sample_html, "")
+                        else:
+                            # As a last resort, display the HTML as text
+                            raise RuntimeError('No supported WebView HTML API')
+                    except Exception:
+                        # On any runtime error, destroy the webview and show text
+                        try:
+                            self.webview.Destroy()
+                        except Exception:
+                            pass
+                        self.webview = None
+                        self.preview_text.Show()
+                        self.preview_text.SetValue(live + "\n\n[HTML demo available but rendering failed — showing source below]\n" + sample_html)
+                else:
+                    # Creation failed; show fallback text
+                    self.preview_text.Show()
+                    self.preview_text.SetValue(live + "\n\n[HTML demo available but WebView not available] \n" + sample_html)
+            else:
+                # No sample_html rendering requested/available; show friendly text
+                # and ensure the text preview is visible.
+                if sample_html and control.get('id') == 'webview':
+                    live = live + "\n\n[HTML demo available — enable WebView to render it]\n" + sample_html
+                try:
+                    if self.webview:
+                        # If a webview exists but this control isn't rendering HTML,
+                        # hide/destroy it so the text preview can be shown.
+                        try:
+                            self.webview.Hide()
+                        except Exception:
+                            pass
+                except Exception:
+                    pass
+                self.preview_text.Show()
+                self.preview_text.SetValue(live)
 
     def on_save(self, event):
         # Save the current editor content to state; actual file write done by StateManager
